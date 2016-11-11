@@ -6,11 +6,14 @@
         xmlns:userControls="clr-namespace:wpf_tmca.View.UserControls"
         xmlns:local="clr-namespace:wpf_tmca"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="TMCA UML Editor" Height="600" Width="800" Icon="/Images/Holidays-Bat-icon.png">
     <DockPanel>
         <userControls:Menubar DockPanel.Dock="Top"/>
         <userControls:Toolbar DockPanel.Dock="Top"/>
         <userControls:Statusbar DockPanel.Dock="Bottom"/>
         <userControls:Toolbox DockPanel.Dock="Left"/>
+        <Canvas Name="myCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AllowDrop="True">
+            <!-- Canvas items here... -->
+        </Canvas>
     </DockPanel>
 </Window>
