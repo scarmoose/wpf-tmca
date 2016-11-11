@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:wpf_tmca.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+    <StatusBar>
+        <TextBlock Text="{Binding AddStatusBarText}" HorizontalAlignment="Center"/>
+    </StatusBar>
 </UserControl>
