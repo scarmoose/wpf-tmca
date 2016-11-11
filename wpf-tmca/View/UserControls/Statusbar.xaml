@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:wpf_tmca.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <StatusBar>
+    <StatusBar BorderBrush="Black" BorderThickness="0,0.3,0,0">
         <TextBlock Text="{Binding AddStatusBarText}" HorizontalAlignment="Center"/>
     </StatusBar>
 </UserControl>
