@@ -71,22 +71,50 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <ApplicationDefinition Include="View\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Compile Include="View\UserControls\Menubar.xaml.cs">
+      <DependentUpon>Menubar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\Statusbar.xaml.cs">
+      <DependentUpon>Statusbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\Toolbar.xaml.cs">
+      <DependentUpon>Toolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\Toolbox.xaml.cs">
+      <DependentUpon>Toolbox.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
+    <Compile Include="View\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\UserControls\Menubar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\Statusbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\Toolbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\Toolbox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -115,6 +143,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrow-redo-icon.png" />
+    <Resource Include="Images\arrow-undo-icon.png" />
+    <Resource Include="Images\Button-Close-icon.png" />
+    <Resource Include="Images\Copy-icon.png" />
+    <Resource Include="Images\cut-icon.png" />
+    <Resource Include="Images\Editing-Bold-icon.png" />
+    <Resource Include="Images\Editing-Italic-icon.png" />
+    <Resource Include="Images\Editing-Underline-icon.png" />
+    <Resource Include="Images\Holidays-Bat-icon.png" />
+    <Resource Include="Images\new-file-icon.png" />
+    <Resource Include="Images\open-file-icon.png" />
+    <Resource Include="Images\Paste-icon.png" />
+    <Resource Include="Images\Save-as-icon.png" />
+    <Resource Include="Images\Save-icon.png" />
+    <Resource Include="Images\Zoom-In-icon.png" />
+    <Resource Include="Images\Zoom-Out-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
