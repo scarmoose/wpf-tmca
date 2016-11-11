@@ -11,7 +11,7 @@
         <MenuItem Header="_File">
             <MenuItem Header="New Project">
                 <MenuItem.Icon>
-                    <Image Source="Images/new-file-icon.png" />
+                    <Image Source="/Images/new-file-icon.png" />
                 </MenuItem.Icon>
             </MenuItem>
         </MenuItem>
