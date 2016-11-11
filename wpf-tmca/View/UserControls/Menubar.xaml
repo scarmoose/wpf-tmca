@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:wpf_tmca.View.UserControls"
-             xmlns:userControls="clr-namespace:wpf_tmca.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Menu>
@@ -14,6 +13,85 @@
                     <Image Source="/Images/new-file-icon.png" />
                 </MenuItem.Icon>
             </MenuItem>
+            <MenuItem Header="Open Project">
+                <MenuItem.Icon>
+                    <Image Source="/Images/open-file-icon.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Save">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Save-icon.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Save As ...">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Save-as-icon.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator/>
+            <MenuItem Header="Exit" Command="Close">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Holidays-Bat-icon.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="_Edit">
+                <MenuItem Header="Undo">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/arrow-undo-icon.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Redo">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/arrow-redo-icon.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Cut" Command="Cut">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/cut-icon.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Copy" Command="Copy">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Copy-icon.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Paste" Command="Paste">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Paste-icon.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Delete" Command="Delete">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Button-Close-icon.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="Toolbox" IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Statusbar" IsCheckable="True" IsChecked="True"/>
+                <Separator/>
+                <MenuItem Header="Zoom In">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Zoom-In-icon.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Zoom Out">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Zoom-Out-icon.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Insert">
+                <MenuItem Header="New Class"/>
+                <MenuItem Header="New Dependency"/>
+                <MenuItem Header="New TextBox"/>
+            </MenuItem>
+        <MenuItem Header="_Help">
+            <MenuItem Header="Help"/>
+            <Separator/>
+            <MenuItem Header="About"/>
         </MenuItem>
     </Menu>
 </UserControl>
