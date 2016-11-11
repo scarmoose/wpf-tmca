@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using wpf_tmca.Controls.Exit;
+using wpf_tmca.Controller.Exit;
 
 namespace wpf_tmca.ViewModel
 {
@@ -14,6 +14,4 @@ namespace wpf_tmca.ViewModel
 
         public ICommand ExitCommand => exit.ExitCommand;
     }
-
-    
 }
