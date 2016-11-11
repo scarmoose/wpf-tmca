@@ -5,8 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:wpf_tmca.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="150" d:DesignWidth="150">
+
+    <DockPanel>
+        <TextBox DockPanel.Dock="Top" Background="Black" TextAlignment="Center">
+
+        </TextBox>
+        <TextBox VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Left">
             
-    </Grid>
+        </TextBox>
+    </DockPanel>
+
 </UserControl>
