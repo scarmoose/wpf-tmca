@@ -29,11 +29,7 @@
                 </MenuItem.Icon>
             </MenuItem>
             <Separator/>
-            <MenuItem Header="Exit" Command="Close">
-                <MenuItem.Icon>
-                    <Image Source="/Images/Holidays-Bat-icon.png"/>
-                </MenuItem.Icon>
-            </MenuItem>
+            <MenuItem Header="Exit" Command="Close"/>
         </MenuItem>
         <MenuItem Header="_Edit">
                 <MenuItem Header="Undo">
