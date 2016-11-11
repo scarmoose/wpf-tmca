@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:wpf_tmca.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <ToolBar ToolBarTray.IsLocked="True" Background="WhiteSmoke">
+    <ToolBar ToolBarTray.IsLocked="True" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="0,0,0,0.3">
         <Button ToolTip="New Project" Height="20" Width="20">
             <Image Source="/Images/new-file-icon.png"/>
         </Button>

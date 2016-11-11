@@ -75,14 +75,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\Exit\ExitController.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\UserControls\Association.xaml.cs">
+      <DependentUpon>Association.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\Class.xaml.cs">
+      <DependentUpon>Class.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\Menubar.xaml.cs">
       <DependentUpon>Menubar.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\Statusbar.xaml.cs">
       <DependentUpon>Statusbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\TextBox.xaml.cs">
+      <DependentUpon>TextBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
@@ -102,11 +109,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\UserControls\Association.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\Class.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\Menubar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\Statusbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\TextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
