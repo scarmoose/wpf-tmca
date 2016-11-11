@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace wpf_tmca.Controller.Exit
 {
@@ -16,7 +17,11 @@ namespace wpf_tmca.Controller.Exit
 
         public void ExitProgram()
         {
-            
+            var mainWindow = (Application.Current.MainWindow as MainWindow);
+            if (mainWindow != null)
+            {
+                mainWindow.Close();
+            }
         }
     }
 }
