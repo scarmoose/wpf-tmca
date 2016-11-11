@@ -3,10 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:userControls="clr-namespace:wpf_tmca.View.UserControls"
         xmlns:local="clr-namespace:wpf_tmca"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+    <DockPanel>
+        <userControls:Menubar DockPanel.Dock="Top"/>
+        <userControls:Toolbar DockPanel.Dock="Top"/>
+        <userControls:Statusbar DockPanel.Dock="Bottom"/>
+        <userControls:Toolbox DockPanel.Dock="Left"/>
+    </DockPanel>
 </Window>
