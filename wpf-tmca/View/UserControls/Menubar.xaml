@@ -29,7 +29,7 @@
                 </MenuItem.Icon>
             </MenuItem>
             <Separator/>
-            <MenuItem Header="Exit" Command="Close"/>
+            <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
         </MenuItem>
         <MenuItem Header="_Edit">
                 <MenuItem Header="Undo">

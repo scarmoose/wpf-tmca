@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:userControls="clr-namespace:wpf_tmca.View.UserControls"
+        xmlns:viewModel="clr-namespace:wpf_tmca.ViewModel"
         xmlns:local="clr-namespace:wpf_tmca"
         mc:Ignorable="d"
         Title="TMCA UML Editor" Height="600" Width="800" Icon="/Images/Holidays-Bat-icon.png">
+    <Window.DataContext>
+        <viewModel:MainViewModel />
+    </Window.DataContext>
     <DockPanel>
         <userControls:Menubar DockPanel.Dock="Top"/>
         <userControls:Toolbar DockPanel.Dock="Top"/>
