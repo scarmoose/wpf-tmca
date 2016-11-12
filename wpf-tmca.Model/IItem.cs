@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace wpf_tmca.Model
 {
-    interface IItem
+    public interface IItem
     {
         List<string> Context { get; set; }
         double Height { get; }
@@ -16,6 +16,6 @@ namespace wpf_tmca.Model
         int ItemNumber { get; }
         EItem Type { get; }
 
-        string toString();
+        string ToString();
     }
 }

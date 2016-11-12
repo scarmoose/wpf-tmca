@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace wpf_tmca.Model
 {
-    interface ILine
+    public interface ILine
     {
         int fromPoint { get; }
         int toPoint { get; }
