@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace wpf_tmca.Model
 {
-    class Line : ILine
+    public class Line : ILine
     {
         public int fromPoint { get; set; }
         public string Label { get; set; }

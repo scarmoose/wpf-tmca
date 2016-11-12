@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace wpf_tmca.Model
 {
-    class Item : IItem
+    public class Item : IItem
     {
         private static int _itemNumber;
 
