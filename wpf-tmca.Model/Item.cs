@@ -17,6 +17,6 @@ namespace wpf_tmca.Model
         public double Weight { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
-        public string toString() => 
+        public string toString() => $"{GetType().Name} ({_itemNumber})";
     }
 }
