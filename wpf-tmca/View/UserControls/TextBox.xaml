@@ -6,6 +6,13 @@
              xmlns:local="clr-namespace:wpf_tmca.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <TextBox />
-
+    <TextBox Name="textbox" 
+         HorizontalAlignment="Stretch"
+		 MinHeight="23"
+		 Margin="5,5,5,5"
+		 TextWrapping="Wrap"
+		 Text=""
+		 VerticalAlignment="Top"
+		 MinWidth="40"
+         MaxWidth="180"/>
 </UserControl>

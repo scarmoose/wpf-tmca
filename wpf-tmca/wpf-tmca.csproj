@@ -75,6 +75,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\AddItem\AddItemsController.cs" />
     <Compile Include="Controller\Exit\ExitController.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="View\Adorners\MoveAdorner.cs" />

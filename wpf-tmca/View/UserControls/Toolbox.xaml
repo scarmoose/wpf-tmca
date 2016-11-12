@@ -4,15 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:wpf_tmca.View.UserControls"
+             xmlns:userControls="clr-namespace:wpf_tmca.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="150">
     <Border BorderBrush="Black" BorderThickness="0,0,0.2,0">
         <StackPanel>
-            <Button Content="New Class" Command="{Binding AddClassCommand}" Width="100" Height="70" Margin="10"/>
+            <Button Content="New Class" Command="{Binding AddClassCommand}" Width="100" Height="70" Margin="10">
+                
+            </Button>
             <Separator Margin="5"/>
-            <Button Content="New Association" Command="{Binding AddAssociationCommand}" Width="100" Height="70" Margin="10"/>
+            <Button Content="New Association" Command="{Binding AddAssociationCommand}" Width="100" Height="70" Margin="10">
+                
+            </Button>
             <Separator Margin="5"/>
-            <Button Content="New TextBox" Command="{Binding AddTextBoxCommand}" Width="100" Height="70" Margin="10"/>
+            <Button Command="{Binding AddTextBoxCommand}" Width="100" Height="70" Margin="10">
+            </Button>
         </StackPanel>
     </Border>
 </UserControl>
