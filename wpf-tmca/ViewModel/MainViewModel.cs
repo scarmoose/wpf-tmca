@@ -8,10 +8,13 @@ using wpf_tmca.Controller.Exit;
 
 namespace wpf_tmca.ViewModel
 {
-    class MainViewModel
+    class MainViewModel : BaseViewModel
     {
         private ExitController exit => ExitController.Instance;
 
+        #region Commands
         public ICommand ExitCommand => exit.ExitCommand;
+
+        #endregion
     }
 }
