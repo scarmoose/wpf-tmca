@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace wpf_tmca.Model
 {
-    public enum ELine
+    public enum EAssociation
     {
         Solid
     }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace wpf_tmca.Model
 {
-    public class Line : ILine
+    public class Association : IAssociation
     {
         public int fromPoint { get; set; }
         public string Label { get; set; }
         public int toPoint { get; set; }
-        public ELine Type { get; set; }
+        public EAssociation Type { get; set; }
     }
 }
