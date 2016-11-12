@@ -77,6 +77,7 @@
     </ApplicationDefinition>
     <Compile Include="Controller\Exit\ExitController.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\ItemViewModel.cs" />
     <Compile Include="View\Adorners\MoveAdorner.cs" />
     <Compile Include="View\Behaviors\DragBehavior.cs" />
     <Compile Include="View\Behaviors\PositionTransfer.cs" />
@@ -188,6 +189,12 @@
     <Resource Include="Images\Save-icon.png" />
     <Resource Include="Images\Zoom-In-icon.png" />
     <Resource Include="Images\Zoom-Out-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\wpf-tmca.Model\wpf-tmca.Model.csproj">
+      <Project>{F8500270-D6AC-4BCB-B6EE-D9344DA11D94}</Project>
+      <Name>wpf-tmca.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
