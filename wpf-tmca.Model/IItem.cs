@@ -10,7 +10,7 @@ namespace wpf_tmca.Model
     {
         List<string> Context { get; set; }
         double Height { get; }
-        double Weight { get; }
+        double Width { get; }
         double X { get; }
         double Y { get; }
         int ItemNumber { get; }
