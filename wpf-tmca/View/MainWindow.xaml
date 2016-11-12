@@ -14,8 +14,8 @@
     <DockPanel>
         <userControls:Menubar DockPanel.Dock="Top"/>
         <userControls:Toolbar DockPanel.Dock="Top"/>
-        <userControls:Statusbar DockPanel.Dock="Bottom"/>
-        <userControls:Toolbox DockPanel.Dock="Left" />
+        <userControls:Statusbar DockPanel.Dock="Bottom" Visibility="{Binding StatusBarVisability}"/>
+        <userControls:Toolbox DockPanel.Dock="Left" Visibility="{Binding ToolBoxVisability}"/>
         <Canvas Name="myCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AllowDrop="True">
             <!-- Canvas items here... -->
         </Canvas>

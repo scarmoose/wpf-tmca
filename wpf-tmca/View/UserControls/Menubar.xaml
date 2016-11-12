@@ -65,7 +65,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Header="Toolbox" IsCheckable="True" IsChecked="True"/>
+            <MenuItem Header="Toolbox" IsCheckable="True" IsChecked="True" Command="{Binding HideToolBoxCommand}"/>
                 <MenuItem Header="Statusbar" IsCheckable="True" IsChecked="True" Command="{Binding HideStatusBarCommand}"/>
                 <Separator/>
                 <MenuItem Header="Zoom In">
