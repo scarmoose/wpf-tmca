@@ -17,7 +17,7 @@
                 
             </Button>
             <Separator Margin="5"/>
-            <Button Command="{Binding AddTextBoxCommand}" Width="100" Height="70" Margin="10">
+            <Button Content="New TextBox" Command="{Binding AddTextBoxCommand}" Width="100" Height="70" Margin="10">
             </Button>
         </StackPanel>
     </Border>
