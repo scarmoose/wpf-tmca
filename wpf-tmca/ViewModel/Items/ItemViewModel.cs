@@ -8,7 +8,7 @@ using wpf_tmca.Model;
 
 namespace wpf_tmca.ViewModel
 {
-    class ItemViewModel : BaseViewModel, IItem
+    public abstract class ItemViewModel : BaseViewModel, IItem
     {
         private bool _isSelected;
         private Point _initialMousePostion;

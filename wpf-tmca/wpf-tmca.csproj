@@ -78,12 +78,16 @@
     <Compile Include="Controller\Exit\ExitController.cs" />
     <Compile Include="Controller\ViewController.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\Items\ClassViewModel.cs" />
     <Compile Include="ViewModel\Items\ItemViewModel.cs" />
     <Compile Include="ViewModel\Items\TextBoxItem.cs" />
     <Compile Include="View\Adorners\MoveAdorner.cs" />
     <Compile Include="View\Behaviors\DragBehavior.cs" />
     <Compile Include="View\Behaviors\PositionTransfer.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\Components\ItemsListBox.xaml.cs">
+      <DependentUpon>ItemsListBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\Association.xaml.cs">
       <DependentUpon>Association.xaml</DependentUpon>
     </Compile>
@@ -105,6 +109,10 @@
     <Compile Include="View\UserControls\Toolbox.xaml.cs">
       <DependentUpon>Toolbox.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\Components\ItemsListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

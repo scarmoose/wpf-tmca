@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:wpf_tmca.View.UserControls"
              xmlns:userControls="clr-namespace:wpf_tmca.View.UserControls"
+             xmlns:viewModel="clr-namespace:wpf_tmca.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="150">
     <Border BorderBrush="Black" BorderThickness="0,0,0.2,0">
         <StackPanel>
-            <Button Content="New Class" Command="{Binding AddClassCommand}" Width="100" Height="70" Margin="10">
+            <ToggleButton Content="New Class" IsChecked="{Binding IsAddingClassPressed}" Width="100" Height="70" Margin="10">
                 
-            </Button>
+            </ToggleButton>
             <Separator Margin="5"/>
             <Button Content="New Association" Command="{Binding AddAssociationCommand}" Width="100" Height="70" Margin="10">
                 

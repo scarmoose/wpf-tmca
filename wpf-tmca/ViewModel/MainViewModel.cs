@@ -7,17 +7,23 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using wpf_tmca.Controller;
 using wpf_tmca.Controller.Exit;
+using System.Windows;
+using wpf_tmca.ViewModel.Items;
 
 namespace wpf_tmca.ViewModel
 {
     class MainViewModel : BaseViewModel
     {
         private ExitController exit => ExitController.Instance;
+        private bool _isAddingClassPressed;
+        private ItemViewModel _itemViewModel;
+
 
         #region Commands
         public ICommand ExitCommand => exit.ExitCommand;
         public ICommand HideStatusBarCommand => new RelayCommand(HideStatusBar);
         public ICommand HideToolBoxCommand => new RelayCommand(HideToolBox);
+        public RelayCommand<MouseButtonEventArgs> CreateItemCommand => new RelayCommand<MouseButtonEventArgs>(OnClickCreateItem, CanCreateItem);
 
         #endregion
 
@@ -94,5 +100,30 @@ namespace wpf_tmca.ViewModel
             _toolBox = true;
         }
 
+        private bool CanCreateItem(MouseButtonEventArgs e)
+        {
+            return IsAddingClassPressed;
+        }
+
+        private void OnClickCreateItem(MouseButtonEventArgs e)
+        {
+            ItemViewModel item = null;
+            var position = e.MouseDevice.GetPosition(e.Source as IInputElement);
+            if (IsAddingClassPressed)
+            {
+                item = new ClassViewModel() { Width = 60, Height = 80, X = position.X, Y = position.Y };
+                IsAddingClassPressed = false;
+            }             
+        }
+
+        public bool IsAddingClassPressed
+        {
+            get { return _isAddingClassPressed; }
+            set
+            {
+                _isAddingClassPressed = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
