@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace wpf_tmca.Commands
 {
-    class CommandController
+    public class CommandController
     {
         private static readonly CommandController _self = new CommandController();
         private readonly Stack<IUndoRedoCommand> _undoStack = new Stack<IUndoRedoCommand>();

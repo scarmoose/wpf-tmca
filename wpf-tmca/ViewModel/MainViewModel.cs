@@ -9,6 +9,8 @@ using wpf_tmca.Controller;
 using wpf_tmca.Controller.Exit;
 using System.Windows;
 using wpf_tmca.ViewModel.Items;
+using wpf_tmca.Commands;
+using wpf_tmca.Commands.UndoRedoCommands;
 
 namespace wpf_tmca.ViewModel
 {
@@ -16,7 +18,9 @@ namespace wpf_tmca.ViewModel
     {
         private ExitController exit => ExitController.Instance;
         private bool _isAddingClassPressed;
+        private bool _isAddingTextBoxPressed;
         public ItemsCollection Items { get;  }
+        private CommandController commandController => CommandController.Instance;
 
 
         #region Commands
@@ -120,10 +124,17 @@ namespace wpf_tmca.ViewModel
             if (IsAddingClassPressed)
             {
                 item = new ClassViewModel() { Width = 60, Height = 80, X = position.X, Y = position.Y };
-                Items.Add(item);
                 IsAddingClassPressed = false;
-
-            }             
+            }
+            if (IsAddingTextBoxPressed)
+            {
+                item = new TextBoxViewModel() { Width = 60, Height = 60, X = position.X, Y = position.Y };
+                IsAddingTextBoxPressed = false; 
+            }
+            if (item != null)
+            {
+                commandController.AddAndExecute(new AddItemCommand(Items, item)); 
+            }
         }
 
         #endregion
@@ -134,6 +145,17 @@ namespace wpf_tmca.ViewModel
             set
             {
                 _isAddingClassPressed = value;
+                OnPropertyChanged();
+                CreateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool IsAddingTextBoxPressed
+        {
+            get { return _isAddingTextBoxPressed; }
+            set
+            {
+                _isAddingTextBoxPressed = value;
                 OnPropertyChanged();
                 CreateItemCommand.RaiseCanExecuteChanged();
             }

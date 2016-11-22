@@ -90,7 +90,7 @@
     <Compile Include="ViewModel\ItemsCollection.cs" />
     <Compile Include="ViewModel\Items\ClassViewModel.cs" />
     <Compile Include="ViewModel\Items\ItemViewModel.cs" />
-    <Compile Include="ViewModel\Items\TextBoxItem.cs" />
+    <Compile Include="ViewModel\Items\TextBoxViewModel.cs" />
     <Compile Include="View\Adorners\MoveAdorner.cs" />
     <Compile Include="View\Adorners\UserControlAdorner.cs" />
     <Compile Include="View\Behaviors\BasicCommandBehaviors.cs" />
