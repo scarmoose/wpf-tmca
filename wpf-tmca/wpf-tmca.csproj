@@ -95,6 +95,9 @@
     <Compile Include="View\Components\ItemsListBox.xaml.cs">
       <DependentUpon>ItemsListBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Components\ItemContainer.xaml.cs">
+      <DependentUpon>ItemContainer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\Association.xaml.cs">
       <DependentUpon>Association.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Components\ItemContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -132,6 +139,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Resources\StyleDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\Association.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
