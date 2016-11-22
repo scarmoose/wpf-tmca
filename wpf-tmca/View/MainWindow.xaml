@@ -21,7 +21,7 @@
         <userControls:Toolbox DockPanel.Dock="Left" Visibility="{Binding ToolBoxVisability}"/>
         
         <Grid Name="myGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <ItemsControl ItemsSource="{Binding Items}">
+            <ItemsControl ItemsSource="{Binding Associations}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas/>

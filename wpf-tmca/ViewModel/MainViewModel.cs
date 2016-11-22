@@ -9,6 +9,8 @@ using wpf_tmca.Controller;
 using wpf_tmca.Controller.Exit;
 using System.Windows;
 using wpf_tmca.ViewModel.Items;
+using System.Collections.ObjectModel;
+using wpf_tmca.ViewModel.Associations;
 
 namespace wpf_tmca.ViewModel
 {
@@ -17,7 +19,7 @@ namespace wpf_tmca.ViewModel
         private ExitController exit => ExitController.Instance;
         private bool _isAddingClassPressed;
         public ItemsCollection Items { get;  }
-
+        public ObservableCollection<AssociationViewModel> Associations { get; }
 
         #region Commands
         public ICommand ExitCommand => exit.ExitCommand;
@@ -101,7 +103,13 @@ namespace wpf_tmca.ViewModel
 
             Items = new ItemsCollection()
             {
-                new ClassViewModel() { X = 20, Y = 20, Width = 10, Height = 10 }
+                new ClassViewModel() { X = 20, Y = 20, Width = 100, Height = 100 },
+                new ClassViewModel() { X = 60, Y = 60, Width = 100, Height = 100 }
+            };
+
+            Associations = new ObservableCollection<AssociationViewModel>()
+            {
+                new DependencyViewModel(Items[0], Items[1])
             };
         }
 
