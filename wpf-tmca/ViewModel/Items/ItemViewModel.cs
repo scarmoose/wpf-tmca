@@ -8,7 +8,7 @@ using wpf_tmca.Model;
 
 namespace wpf_tmca.ViewModel
 {
-    public abstract class ItemViewModel : BaseViewModel, IItem
+    public abstract class ItemViewModel : BaseViewModel, IItem, IEquatable<ItemViewModel>, IEqualityComparer<ItemViewModel>
     {
         private bool _isSelected;
         private Point _initialMousePostion;
@@ -86,6 +86,20 @@ namespace wpf_tmca.ViewModel
         }
 
         #endregion
+
+        public override bool Equals(object obj) => Equals(obj as ItemViewModel);
+        public bool Equals(ItemViewModel other) => ItemNumber == other?.ItemNumber;
+        public bool Equals(ItemViewModel x, ItemViewModel y) => x?.ItemNumber == y?.ItemNumber;
+
+        public override int GetHashCode()
+        {
+            return ItemNumber;
+        }
+        public int GetHashCode(ItemViewModel obj)
+        {
+            if (obj == null) throw new ArgumentNullException($"{nameof(GetHashCode)}() can not be null");
+            return obj.GetHashCode();
+        }
 
         #region IItem
 

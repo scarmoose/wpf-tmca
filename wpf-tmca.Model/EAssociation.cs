@@ -8,6 +8,6 @@ namespace wpf_tmca.Model
 {
     public enum EAssociation
     {
-        Solid
+        Dependency
     }
 }

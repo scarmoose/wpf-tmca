@@ -7,11 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="150">
 
-    <DockPanel>
-        <TextBox DockPanel.Dock="Top" Background="Black" TextAlignment="Center">
-
+    <DockPanel Name="ClassBox">
+        <Border BorderThickness="1"/>
+        <TextBox DockPanel.Dock="Top" Background="Black" TextAlignment="Center" Name="TitleBox">
+            <TextBlock />
         </TextBox>
-        <TextBox VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Left">
+        <TextBox VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Left" Name="BodyBox">
             
         </TextBox>
     </DockPanel>

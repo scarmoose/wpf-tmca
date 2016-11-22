@@ -16,7 +16,7 @@ namespace wpf_tmca.ViewModel
     {
         private ExitController exit => ExitController.Instance;
         private bool _isAddingClassPressed;
-        private ItemViewModel _itemViewModel;
+        public ItemsCollection Items { get;  }
 
 
         #region Commands
@@ -68,7 +68,7 @@ namespace wpf_tmca.ViewModel
             }
             else
             {
-                return "Hidden";
+                return "Collapsed";
             }
         }
 
@@ -94,11 +94,19 @@ namespace wpf_tmca.ViewModel
 
         #endregion
 
-        public MainViewModel()
+        public MainViewModel() : base()
         {
             _statusBar = true;
             _toolBox = true;
+
+            Items = new ItemsCollection()
+            {
+                new ClassViewModel() { X = 20, Y = 20, Width = 10, Height = 10 },
+                new ClassViewModel() { X = 200, Y = 200, Width = 10, Height = 10 }
+            };
         }
+
+        #region MouseEvents
 
         private bool CanCreateItem(MouseButtonEventArgs e)
         {
@@ -116,6 +124,8 @@ namespace wpf_tmca.ViewModel
             }             
         }
 
+        #endregion
+
         public bool IsAddingClassPressed
         {
             get { return _isAddingClassPressed; }
@@ -126,5 +136,6 @@ namespace wpf_tmca.ViewModel
                 CreateItemCommand.RaiseCanExecuteChanged();
             }
         }
+
     }
 }

@@ -77,7 +77,11 @@
     </ApplicationDefinition>
     <Compile Include="Controller\Exit\ExitController.cs" />
     <Compile Include="Controller\ViewController.cs" />
+    <Compile Include="EItemStatus.cs" />
+    <Compile Include="ViewModel\Associations\AssociationViewModel.cs" />
+    <Compile Include="ViewModel\Associations\DependencyViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\ItemsCollection.cs" />
     <Compile Include="ViewModel\Items\ClassViewModel.cs" />
     <Compile Include="ViewModel\Items\ItemViewModel.cs" />
     <Compile Include="ViewModel\Items\TextBoxItem.cs" />
