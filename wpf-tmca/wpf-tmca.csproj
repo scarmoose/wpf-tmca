@@ -82,6 +82,9 @@
     <Compile Include="ViewModel\Items\ItemViewModel.cs" />
     <Compile Include="ViewModel\Items\TextBoxItem.cs" />
     <Compile Include="View\Adorners\MoveAdorner.cs" />
+    <Compile Include="View\Adorners\UserControlAdorner.cs" />
+    <Compile Include="View\Behaviors\BasicCommandBehaviors.cs" />
+    <Compile Include="View\Behaviors\ClickableOverleyBehavior.cs" />
     <Compile Include="View\Behaviors\DragBehavior.cs" />
     <Compile Include="View\Behaviors\PositionTransfer.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

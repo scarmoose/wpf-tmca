@@ -18,11 +18,11 @@ namespace wpf_tmca.View.Components
     /// <summary>
     /// Interaction logic for ItemsListBox.xaml
     /// </summary>
-    public partial class ItemsListBox : UserControl
+    public partial class ItemsListBox : ListBox
     {
         public ItemsListBox()
         {
             InitializeComponent();
         }
-    }
+    } 
 }

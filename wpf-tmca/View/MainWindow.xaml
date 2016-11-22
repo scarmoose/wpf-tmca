@@ -3,11 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:userControls="clr-namespace:wpf_tmca.View.UserControls"
         xmlns:viewModel="clr-namespace:wpf_tmca.ViewModel"
         xmlns:local="clr-namespace:wpf_tmca"
         mc:Ignorable="d"
         xmlns:ec="clr-namespace:wpf_tmca.View.Components"
+        xmlns:b="clr-namespace:wpf_tmca.View.Behaviors"
         Title="TMCA UML Editor" Height="600" Width="800" Icon="/Images/Holidays-Bat-icon.png">
     <Window.DataContext>
         <viewModel:MainViewModel />
@@ -17,10 +19,29 @@
         <userControls:Toolbar DockPanel.Dock="Top"/>
         <userControls:Statusbar DockPanel.Dock="Bottom" Visibility="{Binding StatusBarVisability}"/>
         <userControls:Toolbox DockPanel.Dock="Left" Visibility="{Binding ToolBoxVisability}"/>
-        <Canvas Name="myCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AllowDrop="True">
-            
+        <Grid Name="myGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ItemsControl ItemsSource="{Binding Items}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+           <ec:ItemsListBox x:Name="ItemControl" ItemsSource="{Binding Items}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <i:Interaction.Behaviors>
+                    <b:ClickableOverleyBehavior Command="{Binding CreateItemCommand}" PassEventArgsOnClick="true">
+                        
+                    </b:ClickableOverleyBehavior>
+                </i:Interaction.Behaviors>
+            </ec:ItemsListBox> 
             <!-- Indsæt noget så det virker her -->
             
-        </Canvas>
+        </Grid>
     </DockPanel>
 </Window>
