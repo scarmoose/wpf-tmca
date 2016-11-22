@@ -19,6 +19,7 @@
         <userControls:Toolbar DockPanel.Dock="Top"/>
         <userControls:Statusbar DockPanel.Dock="Bottom" Visibility="{Binding StatusBarVisability}"/>
         <userControls:Toolbox DockPanel.Dock="Left" Visibility="{Binding ToolBoxVisability}"/>
+        
         <Grid Name="myGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ItemsControl ItemsSource="{Binding Items}">
                 <ItemsControl.ItemsPanel>
@@ -36,9 +37,10 @@
                 </i:Interaction.Triggers>
                 <i:Interaction.Behaviors>
                     <b:ClickableOverlayBehavior Command="{Binding CreateItemCommand}" PassEventArgsOnClick="True">
-                        
+                        <b:ClickableOverlayBehavior.AdornerChildElement>
+                            <Rectangle Fill="Transparent"/>
+                        </b:ClickableOverlayBehavior.AdornerChildElement>
                     </b:ClickableOverlayBehavior>
-
 
                 </i:Interaction.Behaviors>
             </ec:ItemsListBox> 
