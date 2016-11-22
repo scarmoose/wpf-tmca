@@ -35,9 +35,11 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <i:Interaction.Behaviors>
-                    <b:ClickableOverleyBehavior Command="{Binding CreateItemCommand}" PassEventArgsOnClick="true">
+                    <b:ClickableOverlayBehavior Command="{Binding CreateItemCommand}" PassEventArgsOnClick="True">
                         
-                    </b:ClickableOverleyBehavior>
+                    </b:ClickableOverlayBehavior>
+
+
                 </i:Interaction.Behaviors>
             </ec:ItemsListBox> 
             <!-- Indsæt noget så det virker her -->
