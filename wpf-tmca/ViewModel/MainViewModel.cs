@@ -68,7 +68,7 @@ namespace wpf_tmca.ViewModel
             }
             else
             {
-                return "Hidden";
+                return "Collapsed";
             }
         }
 
@@ -106,6 +106,8 @@ namespace wpf_tmca.ViewModel
             };
         }
 
+        #region MouseEvents
+
         private bool CanCreateItem(MouseButtonEventArgs e)
         {
             return IsAddingClassPressed;
@@ -121,6 +123,8 @@ namespace wpf_tmca.ViewModel
                 IsAddingClassPressed = false;
             }             
         }
+
+        #endregion
 
         public bool IsAddingClassPressed
         {
