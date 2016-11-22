@@ -75,6 +75,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CommandController.cs" />
+    <Compile Include="Commands\IUndoRedoCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\AddItemCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\AddLineCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\RemoveItemsCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\RemoveLinesCommand.cs" />
     <Compile Include="Controller\Exit\ExitController.cs" />
     <Compile Include="Controller\ViewController.cs" />
     <Compile Include="EItemStatus.cs" />

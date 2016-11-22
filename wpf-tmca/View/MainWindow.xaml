@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:userControls="clr-namespace:wpf_tmca.View.UserControls"
         xmlns:viewModel="clr-namespace:wpf_tmca.ViewModel"
@@ -36,18 +37,20 @@
                         <Canvas />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
+                <!--
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <userControls:Class/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
+                -->
             </ItemsControl>
 
 
             <ec:ItemsListBox x:Name="ItemControl" ItemsSource="{Binding Items}" Style="{StaticResource ItemCanvasStyle}" ItemContainerStyle="{StaticResource ItemContainerStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                        
+                        <cmd:EventToCommand Command="{Binding DeselectAllCommand}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <i:Interaction.Behaviors>
