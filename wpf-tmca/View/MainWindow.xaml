@@ -27,7 +27,13 @@
                         <Canvas/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <userControls:Class/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
             </ItemsControl>
+            
 
            <ec:ItemsListBox x:Name="ItemControl" ItemsSource="{Binding Items}">
                 <i:Interaction.Triggers>
