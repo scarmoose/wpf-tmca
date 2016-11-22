@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:wpf_tmca.View.Resources">
+
+    <Style x:Key="Dependency" TargetType="Line">
+        <Setter Property="X1" Value="{Binding From.CenterX}"/>
+        <Setter Property="Y1" Value="{Binding From.CenterY}"/>
+        <Setter Property="X2" Value="{Binding To.CenterX}"/>
+        <Setter Property="Y2" Value="{Binding To.CenterY}"/>
+        <Setter Property="StrokeThickness" Value="3"/>
+        <Setter Property="Stroke" Value="Black"/>
+    </Style>
+
+    <Style x:Key="ClassControl" TargetType="Border">
+        <Setter Property="Width" Value="{Binding Width}"/>
+        <Setter Property="Height" Value="{Binding Height}"/>
+        <Setter Property="Selector.IsSelected" Value="{Binding IsSelected}"/>
+        <Setter Property="Focusable" Value="True"/>
+
+        <Style.Triggers>
+            <Trigger Property="Selector.IsSelected" Value="True">
+                <Setter  Property="BorderBrush" Value="{StaticResource BorderIsSelected}"></Setter>
+                <Setter  Property="BorderThickness" Value="2"></Setter>
+                <Setter Property="FocusManager.FocusedElement" Value="{Binding}"></Setter>
+            </Trigger>
+            <Trigger Property="Selector.IsSelected" Value="False">
+                <Setter  Property="BorderBrush" Value="Black"></Setter>
+                <Setter  Property="BorderThickness" Value="1"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

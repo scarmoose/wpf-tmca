@@ -6,15 +6,15 @@
                     xmlns:uc="clr-namespace:wpf_tmca.View.UserControls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source=""/>
+        <ResourceDictionary Source="ItemStyleDictionary.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate DataType="{x:Type items:ClassViewModel}">
-        <uc:Class Style="{StaticResource }"/>
+        <uc:Class Style="{StaticResource ClassControl}"/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type a:DependencyViewModel}">
-        <uc:Class Style="{StaticResource }"/>
+        <uc:Class Style="{StaticResource Dependency}"/>
     </DataTemplate>
 
 </ResourceDictionary>
