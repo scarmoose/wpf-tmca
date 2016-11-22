@@ -10,15 +10,14 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace wpf_tmca.View.Components
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Interaction logic for ItemContainer.xaml
     /// </summary>
-    public partial class ItemContainer : ListBox
+    public partial class ItemContainer : ListBoxItem
     {
         public ItemContainer()
         {

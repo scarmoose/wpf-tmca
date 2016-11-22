@@ -98,11 +98,11 @@
     <Compile Include="View\Behaviors\DragBehavior.cs" />
     <Compile Include="View\Behaviors\PositionTransfer.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="View\Components\ItemsListBox.xaml.cs">
-      <DependentUpon>ItemsListBox.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Components\ItemContainer.xaml.cs">
       <DependentUpon>ItemContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Components\ItemsListBox.xaml.cs">
+      <DependentUpon>ItemsListBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\Association.xaml.cs">
       <DependentUpon>Association.xaml</DependentUpon>
@@ -125,11 +125,11 @@
     <Compile Include="View\UserControls\Toolbox.xaml.cs">
       <DependentUpon>Toolbox.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\Components\ItemsListBox.xaml">
+    <Page Include="View\Components\ItemContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Components\ItemContainer.xaml">
+    <Page Include="View\Components\ItemsListBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -146,6 +146,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\Resources\StyleDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Resources\Template.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
