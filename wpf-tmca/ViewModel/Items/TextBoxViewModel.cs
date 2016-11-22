@@ -7,15 +7,15 @@ using wpf_tmca.Model;
 
 namespace wpf_tmca.ViewModel.Items
 {
-    class TextBoxItem : ItemViewModel
+    class TextBoxViewModel : ItemViewModel
     {
-        public TextBoxItem(Item item) : base(item)
+        public TextBoxViewModel(Item item) : base(item)
         {
             Width = 60;
             Height = 23;
         }
 
-        public TextBoxItem():this(new Item() { Type=EItem.TextBox})
+        public TextBoxViewModel():this(new Item() { Type=EItem.TextBox})
         {
 
         }
