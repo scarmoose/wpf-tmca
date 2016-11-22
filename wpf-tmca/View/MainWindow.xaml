@@ -15,6 +15,15 @@
     <Window.DataContext>
         <viewModel:MainViewModel />
     </Window.DataContext>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
     <DockPanel>
         <userControls:Menubar DockPanel.Dock="Top"/>
         <userControls:Toolbar DockPanel.Dock="Top"/>
@@ -25,7 +34,7 @@
             <ItemsControl ItemsSource="{Binding Associations}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas/>
+                        <Canvas />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <!--
@@ -36,9 +45,9 @@
                 </ItemsControl.ItemTemplate>
                 -->
             </ItemsControl>
-            
 
-           <ec:ItemsListBox x:Name="ItemControl" ItemsSource="{Binding Items}">
+
+            <ec:ItemsListBox x:Name="ItemControl" ItemsSource="{Binding Items}" Style="{StaticResource ItemCanvasStyle}" ItemContainerStyle="{StaticResource ItemContainerStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <cmd:EventToCommand Command="{Binding DeselectAllCommand}" PassEventArgsToCommand="True"/>

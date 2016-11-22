@@ -11,6 +11,8 @@ using System.Windows;
 using wpf_tmca.ViewModel.Items;
 using wpf_tmca.Commands;
 using wpf_tmca.Commands.UndoRedoCommands;
+using System.Collections.ObjectModel;
+using wpf_tmca.ViewModel.Associations;
 
 namespace wpf_tmca.ViewModel
 {
@@ -20,6 +22,7 @@ namespace wpf_tmca.ViewModel
         private bool _isAddingClassPressed;
         private bool _isAddingTextBoxPressed;
         public ItemsCollection Items { get;  }
+        public ObservableCollection<AssociationViewModel> Associations { get; }
         private CommandController commandController => CommandController.Instance;
 
 
@@ -108,6 +111,11 @@ namespace wpf_tmca.ViewModel
                 new ClassViewModel() { X = 20, Y = 20, Width = 10, Height = 10 },
                 new ClassViewModel() { X = 200, Y = 200, Width = 10, Height = 10 }
             };
+
+            Associations = new ObservableCollection<AssociationViewModel>()
+            {
+                new DependencyViewModel(Items[0], Items[1])
+            };
         }
 
         #region MouseEvents
@@ -134,7 +142,7 @@ namespace wpf_tmca.ViewModel
             if (item != null)
             {
                 commandController.AddAndExecute(new AddItemCommand(Items, item)); 
-            }
+            }             
         }
 
         #endregion
