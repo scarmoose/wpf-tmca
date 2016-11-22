@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace AdvancedWPFDemo.View.Behaviors
+namespace wpf_tmca.View.Behaviors
 {
     public abstract class BasicCommandBehavior<T> : Behavior<T>, ICommandSource where T : FrameworkElement
     {

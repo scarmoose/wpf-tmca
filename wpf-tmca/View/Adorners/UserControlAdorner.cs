@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace AdvancedWPFDemo.View.Adorners
+namespace wpf_tmca.View.Adorners
 {
     public class UserControlAdorner : Adorner, IDisposable
     {

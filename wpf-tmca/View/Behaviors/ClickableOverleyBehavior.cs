@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
-using AdvancedWPFDemo.View.Adorners;
+using wpf_tmca.View.Adorners;
 
-namespace AdvancedWPFDemo.View.Behaviors
+namespace wpf_tmca.View.Behaviors
 {
     [DefaultProperty("AdornerChildElement")]
     [ContentProperty("AdornerChildElement")]
