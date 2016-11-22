@@ -120,7 +120,9 @@ namespace wpf_tmca.ViewModel
             if (IsAddingClassPressed)
             {
                 item = new ClassViewModel() { Width = 60, Height = 80, X = position.X, Y = position.Y };
+                Items.Add(item);
                 IsAddingClassPressed = false;
+
             }             
         }
 
