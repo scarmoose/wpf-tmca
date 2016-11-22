@@ -31,13 +31,15 @@
            <ec:ItemsListBox x:Name="ItemControl" ItemsSource="{Binding Items}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
-
+                        
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <i:Interaction.Behaviors>
-                    <b:ClickableOverlayBehavior Command="{Binding CreateItemCommand}" PassEventArgsOnClick="true">
+                    <b:ClickableOverlayBehavior Command="{Binding CreateItemCommand}" PassEventArgsOnClick="True">
                         
                     </b:ClickableOverlayBehavior>
+
+
                 </i:Interaction.Behaviors>
             </ec:ItemsListBox> 
             <!-- Indsæt noget så det virker her -->

@@ -84,7 +84,7 @@
     <Compile Include="View\Adorners\MoveAdorner.cs" />
     <Compile Include="View\Adorners\UserControlAdorner.cs" />
     <Compile Include="View\Behaviors\BasicCommandBehaviors.cs" />
-    <Compile Include="View\Behaviors\ClickableOverleyBehavior.cs" />
+    <Compile Include="View\Behaviors\ClickableOverlayBehavior.cs" />
     <Compile Include="View\Behaviors\DragBehavior.cs" />
     <Compile Include="View\Behaviors\PositionTransfer.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
