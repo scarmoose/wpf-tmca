@@ -107,7 +107,6 @@ namespace wpf_tmca.ViewModel
 
         private void OnClickCreateItem(MouseButtonEventArgs e)
         {
-            Console.WriteLine(IsAddingClassPressed);
             ItemViewModel item = null;
             var position = e.MouseDevice.GetPosition(e.Source as IInputElement);
             if (IsAddingClassPressed)
