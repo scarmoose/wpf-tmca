@@ -9,6 +9,8 @@ namespace wpf_tmca.ViewModel.Items
 {
     public class ClassViewModel : ItemViewModel
     {
+        
+
         public ClassViewModel():this(new Item() { Type = EItem.Class }) { }
         public ClassViewModel(Item item) : base(item)
         {

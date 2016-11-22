@@ -101,7 +101,8 @@ namespace wpf_tmca.ViewModel
 
             Items = new ItemsCollection()
             {
-                new ClassViewModel() { X = 20, Y = 20, Width = 10, Height = 10 }
+                new ClassViewModel() { X = 20, Y = 20, Width = 10, Height = 10 },
+                new ClassViewModel() { X = 200, Y = 200, Width = 10, Height = 10 }
             };
         }
 
