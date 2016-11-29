@@ -7,6 +7,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:userControls="clr-namespace:wpf_tmca.View.UserControls"
         xmlns:viewModel="clr-namespace:wpf_tmca.ViewModel"
+        xmlns:items="clr-namespace:wpf_tmca.ViewModel.Items"
         xmlns:local="clr-namespace:wpf_tmca"
         mc:Ignorable="d"
         xmlns:ec="clr-namespace:wpf_tmca.View.Components"
@@ -22,9 +23,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/StyleDictionary.xaml"/>
                 <ResourceDictionary Source="Resources/ItemStyleDictionary.xaml"/>
-
             </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type items:ClassViewModel}">
+                <userControls:Class/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type items:TextBoxViewModel}">
+                <userControls:TextBox/>
+            </DataTemplate>
         </ResourceDictionary>
+
+
+    
     </Window.Resources>
     
     <DockPanel>
@@ -58,17 +67,10 @@
                 </ItemsControl.ItemTemplate>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                        <cmd:EventToCommand Command="{Binding DeselectAllCommand}" PassEventArgsToCommand="True"/>
+                        <cmd:EventToCommand Command="{Binding CreateItemCommand}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <i:Interaction.Behaviors>
-                    <b:ClickableOverlayBehavior Command="{Binding CreateItemCommand}" PassEventArgsOnClick="True">
-                        <b:ClickableOverlayBehavior.AdornerChildElement>
-                            <Rectangle Fill="Transparent"/>
-                        </b:ClickableOverlayBehavior.AdornerChildElement>
-                    </b:ClickableOverlayBehavior>
-
-                </i:Interaction.Behaviors>
+                
             </ec:ItemsListBox> 
             <!-- Indsæt noget så det virker her -->
             

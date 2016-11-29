@@ -10,16 +10,13 @@
              d:DesignHeight="300" d:DesignWidth="150">
     <Border BorderBrush="Black" BorderThickness="0,0,0.2,0">
         <StackPanel>
-            <ToggleButton Content="New Class" IsChecked="{Binding IsAddingClassPressed}" Width="100" Height="70" Margin="10">
-                
-            </ToggleButton>
+            <ToggleButton Content="New Class" IsChecked="{Binding IsAddingClassPressed}" Width="100" Height="70" Margin="10" />
             <Separator Margin="5"/>
             <Button Content="New Association" Command="{Binding AddAssociationCommand}" Width="100" Height="70" Margin="10">
                 
             </Button>
             <Separator Margin="5"/>
-            <Button Content="New TextBox" Command="{Binding AddTextBoxCommand}" Width="100" Height="70" Margin="10">
-            </Button>
+            <ToggleButton Content="New TextBox" IsChecked="{Binding IsAddingTextBoxPressed}" Width="100" Height="70" Margin="10" />
         </StackPanel>
     </Border>
 </UserControl>
