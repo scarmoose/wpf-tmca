@@ -18,4 +18,7 @@ namespace wpf_tmca.ViewModel.Items
             Width = 100;
         }
     }
+
+
+
 }
