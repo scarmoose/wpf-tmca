@@ -31,6 +31,8 @@ namespace wpf_tmca.ViewModel
         public ICommand HideStatusBarCommand => new RelayCommand(HideStatusBar);
         public ICommand HideToolBoxCommand => new RelayCommand(HideToolBox);
         public RelayCommand<MouseButtonEventArgs> CreateItemCommand => new RelayCommand<MouseButtonEventArgs>(OnClickCreateItem, CanCreateItem);
+        public ICommand UndoCommand => commandController.UndoCommand;
+        public ICommand RedoCommand => commandController.RedoCommand;
 
         #endregion
 
@@ -106,7 +108,10 @@ namespace wpf_tmca.ViewModel
             _statusBar = true;
             _toolBox = true;
 
-            Items = new ItemsCollection();
+            Items = new ItemsCollection()
+            {
+                new TextBoxViewModel() { X = 140, Y = 230, Width = 200, Height = 100 }
+            };
             Associations = new ObservableCollection<AssociationViewModel>();
         }
 
@@ -123,11 +128,13 @@ namespace wpf_tmca.ViewModel
             var position = e.MouseDevice.GetPosition(e.Source as IInputElement);
             if (IsAddingClassPressed)
             {
+                Console.WriteLine("Class");
                 item = new ClassViewModel() { Width = 60, Height = 80, X = position.X, Y = position.Y };
                 IsAddingClassPressed = false;
             }
-            if (IsAddingTextBoxPressed)
+            else if (IsAddingTextBoxPressed)
             {
+                Console.WriteLine("TextBox");
                 item = new TextBoxViewModel() { Width = 60, Height = 60, X = position.X, Y = position.Y };
                 IsAddingTextBoxPressed = false; 
             }
