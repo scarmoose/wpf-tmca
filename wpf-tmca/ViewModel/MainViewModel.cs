@@ -31,6 +31,8 @@ namespace wpf_tmca.ViewModel
         public ICommand HideStatusBarCommand => new RelayCommand(HideStatusBar);
         public ICommand HideToolBoxCommand => new RelayCommand(HideToolBox);
         public RelayCommand<MouseButtonEventArgs> CreateItemCommand => new RelayCommand<MouseButtonEventArgs>(OnClickCreateItem, CanCreateItem);
+        public ICommand UndoCommand => commandController.UndoCommand;
+        public ICommand RedoCommand => commandController.RedoCommand;
 
         #endregion
 

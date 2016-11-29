@@ -32,12 +32,12 @@
             <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
         </MenuItem>
         <MenuItem Header="_Edit">
-                <MenuItem Header="Undo">
+                <MenuItem Header="Undo" Command="{Binding UndoCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/arrow-undo-icon.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Redo">
+                <MenuItem Header="Redo" Command="{Binding RedoCommand}">
                     <MenuItem.Icon>
                         <Image Source="/Images/arrow-redo-icon.png"/>
                     </MenuItem.Icon>
