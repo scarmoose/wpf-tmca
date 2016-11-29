@@ -11,6 +11,7 @@
         mc:Ignorable="d"
         xmlns:ec="clr-namespace:wpf_tmca.View.Components"
         xmlns:b="clr-namespace:wpf_tmca.View.Behaviors"
+        xmlns:models="clr-namespace:wpf_tmca.ViewModel.Items"
         Title="TMCA UML Editor" Height="600" Width="800" Icon="/Images/Holidays-Bat-icon.png">
     <Window.DataContext>
         <viewModel:MainViewModel />
@@ -50,6 +51,11 @@
 
 
             <ec:ItemsListBox x:Name="ItemControl" ItemsSource="{Binding Items}" Style="{StaticResource ItemCanvasStyle}" ItemContainerStyle="{StaticResource ItemContainerStyle}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="models:ClassViewModel">
+                        <userControls:Class/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <cmd:EventToCommand Command="{Binding DeselectAllCommand}" PassEventArgsToCommand="True"/>

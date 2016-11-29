@@ -79,6 +79,8 @@
     <Compile Include="Commands\IUndoRedoCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\AddItemCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\AddLineCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\MoveItemCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\MoveItemsCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\RemoveItemsCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\RemoveLinesCommand.cs" />
     <Compile Include="Controller\Exit\ExitController.cs" />
