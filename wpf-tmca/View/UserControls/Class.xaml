@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:wpf_tmca.View.UserControls"
              mc:Ignorable="d">
 
-    <DockPanel MinHeight="150" MinWidth="120" Name="ClassBox">
+    <DockPanel MinHeight="150" MinWidth="1020" Name="ClassBox">
         <Border BorderThickness="1"/>
         <TextBox DockPanel.Dock="Top" Background="Black" TextAlignment="Center" Name="TitleBox" Foreground="AntiqueWhite">
 

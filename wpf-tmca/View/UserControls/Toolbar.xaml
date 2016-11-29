@@ -20,7 +20,7 @@
         <Button ToolTip="Undo" Height="20" Width="20" Command="{Binding UndoCommand}">
             <Image Source="/Images/arrow-undo-icon.png"/>
         </Button>
-        <Button ToolTip="Redo" Height="20" Width="20">
+        <Button ToolTip="Redo" Height="20" Width="20" Command="{Binding RedoCommand}">
             <Image Source="/Images/arrow-redo-icon.png"/>
         </Button>
         <Separator/>
