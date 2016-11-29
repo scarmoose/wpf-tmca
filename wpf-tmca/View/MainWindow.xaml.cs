@@ -23,7 +23,8 @@ namespace wpf_tmca
         public MainWindow()
         {
             InitializeComponent();
-            
         }
+
+
     }
 }

@@ -31,6 +31,8 @@ namespace wpf_tmca.ViewModel
         public ICommand HideStatusBarCommand => new RelayCommand(HideStatusBar);
         public ICommand HideToolBoxCommand => new RelayCommand(HideToolBox);
         public RelayCommand<MouseButtonEventArgs> CreateItemCommand => new RelayCommand<MouseButtonEventArgs>(OnClickCreateItem, CanCreateItem);
+        public ICommand UndoCommand => commandController.UndoCommand;
+        public ICommand RedoCommand => commandController.RedoCommand;
 
         #endregion
 
@@ -106,23 +108,15 @@ namespace wpf_tmca.ViewModel
             _statusBar = true;
             _toolBox = true;
 
-            Items = new ItemsCollection()
-            {
-                new ClassViewModel() { X = 20, Y = 20, Width = 10, Height = 10 },
-                new ClassViewModel() { X = 200, Y = 200, Width = 10, Height = 10 }
-            };
-
-            Associations = new ObservableCollection<AssociationViewModel>()
-            {
-                new DependencyViewModel(Items[0], Items[1])
-            };
+            Items = new ItemsCollection();
+            Associations = new ObservableCollection<AssociationViewModel>();
         }
 
         #region MouseEvents
 
         private bool CanCreateItem(MouseButtonEventArgs e)
         {
-            return IsAddingClassPressed;
+            return IsAddingClassPressed || IsAddingTextBoxPressed;
         }
 
         private void OnClickCreateItem(MouseButtonEventArgs e)

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using wpf_tmca.Commands;
+using wpf_tmca.Commands.UndoRedoCommands;
 using wpf_tmca.Model;
 
 namespace wpf_tmca.ViewModel
@@ -14,7 +16,8 @@ namespace wpf_tmca.ViewModel
         private Point _initialMousePostion;
         private bool _isMoving;
         private bool _isConnectingItems;
-        private Point _initialShapePostion;
+        private Point _initialItemPostion;
+        private CommandController _CommandController => CommandController.Instance;
         
         public bool IsSelected
         {
@@ -62,7 +65,7 @@ namespace wpf_tmca.ViewModel
             if (!IsSelected && e.MouseDevice.Target.IsMouseCaptured) return;
             e.MouseDevice.Target.CaptureMouse();
             _initialMousePostion = Mouse.GetPosition(visual);
-            _initialShapePostion = new Point(X, Y);
+            _initialItemPostion = new Point(X, Y);
             _isMoving = true;
         }
         private void OnMouseMove(UIElement visual)
@@ -79,7 +82,7 @@ namespace wpf_tmca.ViewModel
         private void OnMouseLeftUp(MouseButtonEventArgs e)
         {
             if (!_isMoving) return;
-            //Undo add
+            _CommandController.AddAndExecute(new MoveItemCommand(this, _initialItemPostion, new Point(X, Y)));
             _isMoving = false;
             Mouse.Capture(null);
             e.Handled = true;

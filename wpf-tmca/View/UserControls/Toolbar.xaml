@@ -17,7 +17,7 @@
             <Image Source="/Images/Save-icon.png"/>
         </Button>
         <Separator/>
-        <Button ToolTip="Undo" Height="20" Width="20">
+        <Button ToolTip="Undo" Height="20" Width="20" Command="{Binding UndoCommand}">
             <Image Source="/Images/arrow-undo-icon.png"/>
         </Button>
         <Button ToolTip="Redo" Height="20" Width="20">
