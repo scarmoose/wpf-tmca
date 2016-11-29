@@ -31,9 +31,6 @@
                 <userControls:TextBox/>
             </DataTemplate>
         </ResourceDictionary>
-
-
-    
     </Window.Resources>
     
     <DockPanel>
@@ -60,11 +57,7 @@
 
 
             <ec:ItemsListBox x:Name="ItemControl" ItemsSource="{Binding Items}" Style="{StaticResource ItemCanvasStyle}" ItemContainerStyle="{StaticResource ItemContainerStyle}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="models:ClassViewModel">
-                        <userControls:Class/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <cmd:EventToCommand Command="{Binding CreateItemCommand}" PassEventArgsToCommand="True"/>

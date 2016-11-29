@@ -93,11 +93,9 @@
     <Compile Include="ViewModel\Items\ClassViewModel.cs" />
     <Compile Include="ViewModel\Items\ItemViewModel.cs" />
     <Compile Include="ViewModel\Items\TextBoxViewModel.cs" />
-    <Compile Include="View\Adorners\MoveAdorner.cs" />
     <Compile Include="View\Adorners\UserControlAdorner.cs" />
     <Compile Include="View\Behaviors\BasicCommandBehaviors.cs" />
     <Compile Include="View\Behaviors\ClickableOverlayBehavior.cs" />
-    <Compile Include="View\Behaviors\DragBehavior.cs" />
     <Compile Include="View\Behaviors\PositionTransfer.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\Components\ItemContainer.xaml.cs">
@@ -112,6 +110,7 @@
     <Compile Include="View\UserControls\Class.xaml.cs">
       <DependentUpon>Class.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\DraggableControl.cs" />
     <Compile Include="View\UserControls\Menubar.xaml.cs">
       <DependentUpon>Menubar.xaml</DependentUpon>
     </Compile>

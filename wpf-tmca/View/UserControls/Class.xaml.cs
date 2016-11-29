@@ -24,5 +24,8 @@ namespace wpf_tmca.View.UserControls
         {
             InitializeComponent();
         }
+
+
+
     }
 }
