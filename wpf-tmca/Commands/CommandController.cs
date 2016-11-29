@@ -29,6 +29,10 @@ namespace wpf_tmca.Commands
             _redoStack.Clear();
             command.Execute();
             UpdateCommandStatus();
+            foreach(var v in _undoStack)
+            {
+                Console.WriteLine(v.ToString());
+            }
         }
 
         public bool CanUndo() => _undoStack.Any();

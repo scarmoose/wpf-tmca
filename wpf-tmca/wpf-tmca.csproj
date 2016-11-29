@@ -78,11 +78,11 @@
     <Compile Include="Commands\CommandController.cs" />
     <Compile Include="Commands\IUndoRedoCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\AddItemCommand.cs" />
-    <Compile Include="Commands\UndoRedoCommands\AddLineCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\AddAssociationCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\MoveItemCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\MoveItemsCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\RemoveItemsCommand.cs" />
-    <Compile Include="Commands\UndoRedoCommands\RemoveLinesCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\RemoveAssociationCommand.cs" />
     <Compile Include="Controller\Exit\ExitController.cs" />
     <Compile Include="Controller\ViewController.cs" />
     <Compile Include="EItemStatus.cs" />
