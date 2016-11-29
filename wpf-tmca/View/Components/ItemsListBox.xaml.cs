@@ -24,5 +24,32 @@ namespace wpf_tmca.View.Components
         {
             InitializeComponent();
         }
+
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new ItemContainer();
+        }
+        protected override bool IsItemItsOwnContainerOverride(object item)
+        {
+            return (item is ItemContainer);
+        }
+
+        private Queue<ItemContainer> _chain = new Queue<ItemContainer>();
+
+        public void DrawConnection(ItemContainer shapeItemContainer)
+        {
+            if (_chain.Count < 1)
+            {
+                _chain.Enqueue(shapeItemContainer);
+            }
+            else
+            {
+                _chain.Enqueue(shapeItemContainer);
+                //invoke command
+
+                // then
+                _chain.Clear();
+            }
+        }
     } 
 }

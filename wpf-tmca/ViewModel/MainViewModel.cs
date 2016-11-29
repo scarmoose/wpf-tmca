@@ -142,7 +142,7 @@ namespace wpf_tmca.ViewModel
             if (item != null)
             {
                 commandController.AddAndExecute(new AddItemCommand(Items, item)); 
-            }             
+            }
         }
 
         #endregion
