@@ -1,12 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using wpf_tmca.Controller;
-using wpf_tmca.Controller.Exit;
 using System.Windows;
 using wpf_tmca.ViewModel.Items;
 using wpf_tmca.Commands;
@@ -18,16 +12,14 @@ namespace wpf_tmca.ViewModel
 {
     class MainViewModel : BaseViewModel
     {
-        private ExitController exit => ExitController.Instance;
         private bool _isAddingClassPressed;
         private bool _isAddingTextBoxPressed;
         public ItemsCollection Items { get;  }
         public ObservableCollection<AssociationViewModel> Associations { get; }
         private CommandController commandController => CommandController.Instance;
 
-
         #region Commands
-        public ICommand ExitCommand => exit.ExitCommand;
+        public ICommand ExitCommand => commandController.ExitCommand;
         public ICommand HideStatusBarCommand => new RelayCommand(HideStatusBar);
         public ICommand HideToolBoxCommand => new RelayCommand(HideToolBox);
         public RelayCommand<MouseButtonEventArgs> CreateItemCommand => new RelayCommand<MouseButtonEventArgs>(OnClickCreateItem, CanCreateItem);
