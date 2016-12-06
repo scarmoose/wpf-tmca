@@ -69,6 +69,7 @@ namespace wpf_tmca.Commands
         {
             UndoCommand.RaiseCanExecuteChanged();
             RedoCommand.RaiseCanExecuteChanged();
+            Console.WriteLine("UPDATE UNDO/REDO");
         }
 
     }

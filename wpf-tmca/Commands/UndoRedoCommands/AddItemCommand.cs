@@ -7,7 +7,7 @@ using wpf_tmca.ViewModel;
 
 namespace wpf_tmca.Commands.UndoRedoCommands
 {
-    class AddItemCommand : IUndoRedoCommand
+    public class AddItemCommand : IUndoRedoCommand
     {
         private ItemsCollection items;
         private ItemViewModel item;

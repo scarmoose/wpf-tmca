@@ -27,12 +27,14 @@ namespace wpf_tmca.Commands.UndoRedoCommands
         }
         public void Execute()
         {
-            throw new NotImplementedException();
+            itemsToRemove.ForEach(x => items.Remove(x));
+            associationsToRemove.ForEach(x => associations.Remove(x));
         }
 
         public void Unexecute()
         {
-            throw new NotImplementedException();
+            itemsToRemove.ForEach(x => items.Add(x));
+            associationsToRemove.ForEach(x => associations.Add(x));
         }
     }
 }

@@ -18,7 +18,7 @@ namespace wpf_tmca.ViewModel
         private bool _isConnectingItems;
         private Point _initialItemPostion;
         private CommandController _CommandController => CommandController.Instance;
-        
+
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -26,6 +26,7 @@ namespace wpf_tmca.ViewModel
             {
                 _isSelected = value;
                 OnPropertyChanged();
+                NotifyPropertyChanged(() => SelectedColor);
             }
         }
 
@@ -156,6 +157,8 @@ namespace wpf_tmca.ViewModel
 
         public double CenterX => Width / 2 + X;
         public double CenterY => Height / 2 + Y;
+
+        public Brush SelectedColor => IsSelected ? Brushes.Red : Brushes.Yellow;
 
         #endregion
     }

@@ -3,17 +3,65 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:local="clr-namespace:wpf_tmca.View.UserControls"
+             Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" Width="{Binding Width}" Height="{Binding Height}" 
              mc:Ignorable="d">
 
-    <DockPanel MinHeight="150" MinWidth="120" Name="ClassBox" >
-        <Border BorderThickness="1"/>
-        <TextBox DockPanel.Dock="Top"  Background="Black" TextAlignment="Center" Name="TitleBox" Foreground="AntiqueWhite">
-
-        </TextBox>
-        <TextBox TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" TextAlignment="Left" Name="BodyBox">
-            
-        </TextBox>
-    </DockPanel>
+    <Grid>
+        <Rectangle Fill="{Binding SelectedColor}" Stroke="Transparent" StrokeThickness="6" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="1" Text="Choose" TextAlignment="Center" FontWeight="Bold"/>
+            <TextBlock Grid.Row="3" Text="by clicking" TextAlignment="Center" FontWeight="Bold"/>
+        </Grid>
+        <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+            <Rectangle.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="Beige" Offset="0.0" />
+                </RadialGradientBrush>
+            </Rectangle.Fill>
+            <Rectangle.RenderTransform>
+                <RotateTransform CenterX="{Binding CenterX}" CenterY="{Binding CenterY}"/>
+            </Rectangle.RenderTransform>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDown">
+                    <cmd:EventToCommand Command="{Binding DataContext.MouseDownItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseMove">
+                    <cmd:EventToCommand Command="{Binding DataContext.MouseMoveItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="MouseUp">
+                    <cmd:EventToCommand Command="{Binding DataContext.MouseUpItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Rectangle>
+        <TextBlock IsHitTestVisible="False" FontSize="20" Text="{Binding ItemNumber}" TextAlignment="Center" VerticalAlignment="Top" Foreground="White"/>
+        <TextBox HorizontalAlignment="Stretch"
+		 MinHeight="23"
+		 Margin="5,5,5,5"
+		 TextWrapping="Wrap"
+		 Text=""
+		 TextAlignment="Center" 
+         VerticalAlignment="Center"
+		 MinWidth="40"
+         MaxWidth="180"/>
+        <TextBox HorizontalAlignment="Stretch"
+		 MinHeight="23"
+		 Margin="5,5,5,5"
+		 TextWrapping="Wrap"
+		 Text=""
+		 TextAlignment="Center" 
+         VerticalAlignment="Bottom"
+		 MinWidth="40"
+         MaxWidth="180"/>
+    </Grid>
 
 </UserControl>
