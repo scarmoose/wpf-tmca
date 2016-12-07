@@ -204,11 +204,11 @@ namespace wpf_tmca.ViewModel
         {
             if (!isAddingAssociation)
             {
-                var shape = TargetItem(e);
+                var item = TargetItem(e);
                 var mousePosition = RelativeMousePosition(e);
 
                 initialMousePosition = mousePosition;
-                initialShapePosition = new Point(shape.X, shape.Y);
+                initialShapePosition = new Point(item.X, item.Y);
 
                 e.MouseDevice.Target.CaptureMouse();
             }
@@ -218,11 +218,11 @@ namespace wpf_tmca.ViewModel
         {
             if (Mouse.Captured != null && !isAddingAssociation)
             {
-                var shape = TargetItem(e);
+                var item = TargetItem(e);
                 var mousePosition = RelativeMousePosition(e);
 
-                shape.X = initialShapePosition.X + (mousePosition.X - initialMousePosition.X);
-                shape.Y = initialShapePosition.Y + (mousePosition.Y - initialMousePosition.Y);
+                item.X = initialShapePosition.X + (mousePosition.X - initialMousePosition.X);
+                item.Y = initialShapePosition.Y + (mousePosition.Y - initialMousePosition.Y);
             }
         }
 
@@ -253,7 +253,7 @@ namespace wpf_tmca.ViewModel
                 item.X = initialShapePosition.X;
                 item.Y = initialShapePosition.Y;
 
-                commandController.AddAndExecute(new MoveItemCommand(item, mousePosition, initialMousePosition));
+                commandController.AddAndExecute(new MoveItemCommand(item, initialMousePosition, mousePosition));
 
                 e.MouseDevice.Target.ReleaseMouseCapture();
             }

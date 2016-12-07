@@ -25,7 +25,7 @@
         <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
             <Rectangle.Fill>
                 <RadialGradientBrush>
-                    <GradientStop Color="Beige" Offset="0.0" />
+                    <GradientStop Color="Black" Offset="0.0" />
                 </RadialGradientBrush>
             </Rectangle.Fill>
             <Rectangle.RenderTransform>

@@ -26,6 +26,9 @@
         <KeyBinding Modifiers="Control"
                     Key="Y"
                     Command="{Binding RedoCommand}" />
+        <KeyBinding Modifiers="Alt"
+                    Key="F4"
+                    Command="{Binding ExitCommand}" />
     </Window.InputBindings>
 
     <Window.Resources>
