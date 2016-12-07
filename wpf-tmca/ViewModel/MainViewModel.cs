@@ -180,7 +180,7 @@ namespace wpf_tmca.ViewModel
             isAddingAssociation = true;
             RaisePropertyChanged(() => ModeOpacity);
         }
-
+        
         private ItemViewModel TargetItem(MouseEventArgs e)
         {
             var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
@@ -253,7 +253,7 @@ namespace wpf_tmca.ViewModel
                 item.X = initialShapePosition.X;
                 item.Y = initialShapePosition.Y;
 
-                commandController.AddAndExecute(new MoveItemCommand(item, initialMousePosition, mousePosition));
+                commandController.AddAndExecute(new MoveItemCommand(item, mousePosition.X - initialMousePosition.X, mousePosition.Y - initialMousePosition.Y));
 
                 e.MouseDevice.Target.ReleaseMouseCapture();
             }

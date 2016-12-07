@@ -10,7 +10,7 @@
              mc:Ignorable="d">
 
     <Grid>
-        <Rectangle Fill="{Binding SelectedColor}" Stroke="Transparent" StrokeThickness="6" />
+        <Rectangle Fill="{Binding SelectedColor}" Stroke="Transparent" StrokeThickness="6"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -20,7 +20,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="1" Text="Choose" TextAlignment="Center" FontWeight="Bold"/>
-            <TextBlock Grid.Row="3" Text="by clicking" TextAlignment="Center" FontWeight="Bold"/>
+            <TextBlock Grid.Row="3" Text="" TextAlignment="Center" FontWeight="Bold"/>
         </Grid>
         <Rectangle Opacity="{Binding DataContext.ModeOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
             <Rectangle.Fill>
@@ -28,9 +28,6 @@
                     <GradientStop Color="Black" Offset="0.0" />
                 </RadialGradientBrush>
             </Rectangle.Fill>
-            <Rectangle.RenderTransform>
-                <RotateTransform CenterX="{Binding CenterX}" CenterY="{Binding CenterY}"/>
-            </Rectangle.RenderTransform>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDown">
                     <cmd:EventToCommand Command="{Binding DataContext.MouseDownItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
