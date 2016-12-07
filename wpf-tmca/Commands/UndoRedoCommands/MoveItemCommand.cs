@@ -11,25 +11,25 @@ namespace wpf_tmca.Commands.UndoRedoCommands
     public class MoveItemCommand : IUndoRedoCommand
     {
         private ItemViewModel _item;
-        private Point _old;
-        private Point _new;
+        private double _x;
+        private double _y;
 
-        public MoveItemCommand(ItemViewModel item, Point old, Point __new)
+        public MoveItemCommand(ItemViewModel item, double x, double y)
         {
             _item = item;
-            _old = old;
-            _new = __new;
+            _x = x;
+            _y = y;
         }
         public void Execute()
         {
-            _item.X = _new.X;
-            _item.Y = _new.Y;
+            _item.CanvasCenterX += _x;
+            _item.CanvasCenterY += _y;
         }
 
         public void Unexecute()
         {
-            _item.X = _old.X;
-            _item.Y = _old.Y;
+            _item.CanvasCenterX -= _x;
+            _item.CanvasCenterY -= _y;
         }
     
     }

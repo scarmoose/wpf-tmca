@@ -18,7 +18,8 @@ namespace wpf_tmca.ViewModel
         private bool _isConnectingItems;
         private Point _initialItemPostion;
         private CommandController _CommandController => CommandController.Instance;
-
+        
+        /*
         public bool IsSelected
         {
             get { return _isSelected; }
@@ -27,7 +28,10 @@ namespace wpf_tmca.ViewModel
                 _isSelected = value;
                 OnPropertyChanged();
             }
-        }
+        }*/
+        public bool IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
+        
+        public Brush SelectedColor => IsSelected ? Brushes.Red : Brushes.Yellow;
 
         public bool IsConnectingShapes
         {
@@ -46,7 +50,7 @@ namespace wpf_tmca.ViewModel
         }
 
         #region event
-
+        /*
         public ICommand OnMouseLeftBtnDownCommand => new RelayCommand<MouseButtonEventArgs>(OnMouseLeftBtnDown);
         public ICommand OnMouseMoveCommand => new RelayCommand<UIElement>(OnMouseMove);
         public ICommand OnMouseLeftBtnUpCommand => new RelayCommand<MouseButtonEventArgs>(OnMouseLeftUp);
@@ -78,7 +82,7 @@ namespace wpf_tmca.ViewModel
             Y = pos.Y - _initialMousePostion.Y;
         }
 
-
+        
         private void OnMouseLeftUp(MouseButtonEventArgs e)
         {
             if (!_isMoving) return;
@@ -86,7 +90,7 @@ namespace wpf_tmca.ViewModel
             _isMoving = false;
             Mouse.Capture(null);
             e.Handled = true;
-        }
+        }*/
 
         #endregion
 
@@ -110,6 +114,7 @@ namespace wpf_tmca.ViewModel
         public int ItemNumber => Item.ItemNumber;
         public EItem Type => Item.Type;
 
+        /*
         public double Height
         {
             get { return Item.Height; }
@@ -119,8 +124,9 @@ namespace wpf_tmca.ViewModel
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(CenterY));
             }
-        }
-
+        }*/
+        public double Height { get { return Item.Height; } set { Item.Height = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); NotifyPropertyChanged(() => CenterY); } }
+        /*
         public double Width
         {
             get { return Item.Width; }
@@ -130,8 +136,9 @@ namespace wpf_tmca.ViewModel
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(CenterX));
             }
-        }
-
+        }*/
+        public double Width { get { return Item.Width; } set { Item.Width = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); NotifyPropertyChanged(() => CenterX); } }
+        /*
         public double X
         {
             get { return Item.X; }
@@ -141,8 +148,9 @@ namespace wpf_tmca.ViewModel
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(CenterX));
             }
-        }
-
+        }*/
+        public double X { get { return Item.X; } set { Item.X = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); } }
+        /*
         public double Y
         {
             get { return Item.Y; }
@@ -152,10 +160,14 @@ namespace wpf_tmca.ViewModel
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(CenterY));
             }
-        }
+        }*/
+        public double Y { get { return Item.Y; } set { Item.Y = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); } }
 
         public double CenterX => Width / 2 + X;
         public double CenterY => Height / 2 + Y;
+
+        public double CanvasCenterX { get { return X + Width / 2; } set { X = value - Width / 2; NotifyPropertyChanged(() => X); } }
+        public double CanvasCenterY { get { return Y + Height / 2; } set { Y = value - Height / 2; NotifyPropertyChanged(() => Y); } }
 
         #endregion
     }

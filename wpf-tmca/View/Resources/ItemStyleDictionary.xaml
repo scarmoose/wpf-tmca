@@ -2,14 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:wpf_tmca.View.Resources">
 
-    <Style x:Key="Dependency" TargetType="Line">
-        <Setter Property="X1" Value="{Binding From.CenterX}"/>
-        <Setter Property="Y1" Value="{Binding From.CenterY}"/>
-        <Setter Property="X2" Value="{Binding To.CenterX}"/>
-        <Setter Property="Y2" Value="{Binding To.CenterY}"/>
-        <Setter Property="StrokeThickness" Value="3"/>
-        <Setter Property="Stroke" Value="Black"/>
-    </Style>
 
     <Style x:Key="ClassControl" TargetType="Border">
         <Setter Property="Width" Value="{Binding Width}"/>
