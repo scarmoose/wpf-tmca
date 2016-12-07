@@ -10,7 +10,6 @@ namespace wpf_tmca.Model
     {
         public List<IItem> Items { get; set; }
 
-        //Skal måske bare være Association
-        public List<IAssociation> Lines { get; set; }
+        public List<IAssociation> Association { get; set; }
     }
 }

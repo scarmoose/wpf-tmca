@@ -1,38 +1,38 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using wpf_tmca.Controller;
-using wpf_tmca.Controller.Exit;
 using System.Windows;
 using wpf_tmca.ViewModel.Items;
 using wpf_tmca.Commands;
 using wpf_tmca.Commands.UndoRedoCommands;
 using System.Collections.ObjectModel;
 using wpf_tmca.ViewModel.Associations;
+using GalaSoft.MvvmLight;
+using wpf_tmca.Model;
+using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace wpf_tmca.ViewModel
 {
     class MainViewModel : BaseViewModel
     {
-        private ExitController exit => ExitController.Instance;
         private bool _isAddingClassPressed;
         private bool _isAddingTextBoxPressed;
         public ItemsCollection Items { get;  }
         public ObservableCollection<AssociationViewModel> Associations { get; }
         private CommandController commandController => CommandController.Instance;
 
-
         #region Commands
-        public ICommand ExitCommand => exit.ExitCommand;
+        public ICommand ExitCommand => commandController.ExitCommand;
         public ICommand HideStatusBarCommand => new RelayCommand(HideStatusBar);
         public ICommand HideToolBoxCommand => new RelayCommand(HideToolBox);
         public RelayCommand<MouseButtonEventArgs> CreateItemCommand => new RelayCommand<MouseButtonEventArgs>(OnClickCreateItem, CanCreateItem);
         public ICommand UndoCommand => commandController.UndoCommand;
         public ICommand RedoCommand => commandController.RedoCommand;
+        public ICommand MouseDownItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseDownItem);
+        public ICommand MouseMoveItemCommand => new RelayCommand<MouseEventArgs>(MouseMoveItem);
+        public ICommand MouseUpItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseUpItem);
+        public ICommand AddAssociationCommand => new RelayCommand(AddAssociation);
 
         #endregion
 
@@ -108,10 +108,7 @@ namespace wpf_tmca.ViewModel
             _statusBar = true;
             _toolBox = true;
 
-            Items = new ItemsCollection()
-            {
-                new TextBoxViewModel() { X = 140, Y = 230, Width = 200, Height = 100 }
-            };
+            Items = new ItemsCollection();
             Associations = new ObservableCollection<AssociationViewModel>();
         }
 
@@ -167,6 +164,102 @@ namespace wpf_tmca.ViewModel
                 CreateItemCommand.RaiseCanExecuteChanged();
             }
         }
+
+        #region Association
+
+        private bool isAddingAssociation;
+        public double ModeOpacity => isAddingAssociation ? 0.4 : 1.0;
+        private ItemViewModel addingAssociationFrom;
+
+        private Point initialMousePosition;
+
+        private Point initialShapePosition;
+
+        private void AddAssociation()
+        {
+            isAddingAssociation = true;
+            RaisePropertyChanged(() => ModeOpacity);
+        }
+
+        private ItemViewModel TargetItem(MouseEventArgs e)
+        {
+            var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
+            return (ItemViewModel)shapeVisualElement.DataContext;
+        }
+
+        private static T FindParentOfType<T>(DependencyObject o)
+        {
+            dynamic parent = VisualTreeHelper.GetParent(o);
+            return parent.GetType().IsAssignableFrom(typeof(T)) ? parent : FindParentOfType<T>(parent);
+        }
+
+        private Point RelativeMousePosition(MouseEventArgs e)
+        {
+            var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
+            var canvas = FindParentOfType<Canvas>(shapeVisualElement);
+            return Mouse.GetPosition(canvas);
+        }
+
+        private void MouseDownItem(MouseButtonEventArgs e)
+        {
+            if (!isAddingAssociation)
+            {
+                var item = TargetItem(e);
+                var mousePosition = RelativeMousePosition(e);
+
+                initialMousePosition = mousePosition;
+                initialShapePosition = new Point(item.X, item.Y);
+
+                e.MouseDevice.Target.CaptureMouse();
+            }
+        }
+
+        private void MouseMoveItem(MouseEventArgs e)
+        {
+            if (Mouse.Captured != null && !isAddingAssociation)
+            {
+                var item = TargetItem(e);
+                var mousePosition = RelativeMousePosition(e);
+
+                item.X = initialShapePosition.X + (mousePosition.X - initialMousePosition.X);
+                item.Y = initialShapePosition.Y + (mousePosition.Y - initialMousePosition.Y);
+            }
+        }
+
+        private void MouseUpItem(MouseButtonEventArgs e)
+        {
+            if (isAddingAssociation)
+            {
+                var item = TargetItem(e);
+
+                if (addingAssociationFrom == null) { addingAssociationFrom = item; addingAssociationFrom.IsSelected = true; }
+                
+                else if (addingAssociationFrom.ItemNumber != item.ItemNumber)
+                {
+                    commandController.AddAndExecute(new AddAssociationCommand(Associations, new DependencyViewModel() { From = addingAssociationFrom, To = item }));
+                    addingAssociationFrom.IsSelected = false;
+
+                    isAddingAssociation = false;
+                    addingAssociationFrom = null;
+
+                    RaisePropertyChanged(() => ModeOpacity);
+                }
+            }
+            else
+            {
+                var item = TargetItem(e);
+                var mousePosition = RelativeMousePosition(e);
+
+                item.X = initialShapePosition.X;
+                item.Y = initialShapePosition.Y;
+
+                commandController.AddAndExecute(new MoveItemCommand(item, initialMousePosition, mousePosition));
+
+                e.MouseDevice.Target.ReleaseMouseCapture();
+            }
+        }
+
+        #endregion
 
     }
 }

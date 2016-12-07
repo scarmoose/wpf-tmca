@@ -18,7 +18,7 @@ namespace wpf_tmca.ViewModel
         private bool _isConnectingItems;
         private Point _initialItemPostion;
         private CommandController _CommandController => CommandController.Instance;
-        
+
         public bool IsSelected
         {
             get { return _isSelected; }

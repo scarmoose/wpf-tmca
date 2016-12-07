@@ -22,12 +22,12 @@ namespace wpf_tmca.Commands.UndoRedoCommands
 
         public void Execute()
         {
-            throw new NotImplementedException();
+            associations.Add(association);
         }
 
         public void Unexecute()
         {
-            throw new NotImplementedException();
+            associations.Remove(association);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace wpf_tmca.Model
 {
@@ -17,6 +18,5 @@ namespace wpf_tmca.Model
         public double Width { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
-        public string toString() => $"{GetType().Name} ({_itemNumber})";
     }
 }

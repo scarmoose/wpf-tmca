@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace wpf_tmca.Commands
 {
@@ -14,14 +16,23 @@ namespace wpf_tmca.Commands
         private readonly Stack<IUndoRedoCommand> _redoStack = new Stack<IUndoRedoCommand>();
 
         private CommandController() : base()
-        {
-                
+        {  
         }
 
         public static CommandController Instance => _self;
 
         public RelayCommand UndoCommand => new RelayCommand(Undo, CanUndo);
         public RelayCommand RedoCommand => new RelayCommand(Redo, CanRedo);
+        public RelayCommand ExitCommand => new RelayCommand(ExitProgram);
+
+        public void ExitProgram()
+        {
+            var mainWindow = (Application.Current.MainWindow as MainWindow);
+            if (mainWindow != null)
+            {
+                mainWindow.Close();
+            }
+        }
 
         public void AddAndExecute(IUndoRedoCommand command)
         {
@@ -58,6 +69,7 @@ namespace wpf_tmca.Commands
         {
             UndoCommand.RaiseCanExecuteChanged();
             RedoCommand.RaiseCanExecuteChanged();
+            Console.WriteLine("UPDATE UNDO/REDO");
         }
 
     }
