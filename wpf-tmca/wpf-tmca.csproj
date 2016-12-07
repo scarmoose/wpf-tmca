@@ -84,6 +84,7 @@
     <Compile Include="Commands\UndoRedoCommands\RemoveItemsCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\RemoveAssociationCommand.cs" />
     <Compile Include="EItemStatus.cs" />
+    <Compile Include="SaveAndLoad\SaveLoadController.cs" />
     <Compile Include="ViewModel\Associations\AssociationViewModel.cs" />
     <Compile Include="ViewModel\Associations\DependencyViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
