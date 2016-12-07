@@ -16,7 +16,7 @@ namespace wpf_tmca.SaveAndLoad
 
         private SaveLoadController() { }
 
-        public void SaveToFile(Diagram d, string path)
+        private void SaveToFile(Diagram d, string path)
         {
             using (FileStream fs = File.Create(path))
             {
@@ -25,7 +25,7 @@ namespace wpf_tmca.SaveAndLoad
             }
         }
 
-        public Diagram LoadFromFile(string path)
+        private Diagram LoadFromFile(string path)
         {
             using (FileStream fs = File.OpenRead(path))
             {
