@@ -15,17 +15,20 @@ using System.Windows.Controls;
 using wpf_tmca.SaveAndLoad;
 using System.Threading.Tasks;
 using Microsoft.Win32;
+using System.Threading;
 
 namespace wpf_tmca.ViewModel
 {
     class MainViewModel : BaseViewModel
     {
+        string path;
         private bool _isAddingClassPressed;
         private bool _isAddingTextBoxPressed;
         public ItemsCollection Items { get; private set; }
         public ObservableCollection<AssociationViewModel> Associations { get; }
         private CommandController commandController => CommandController.Instance;
         private SaveLoadController saveLoadController => SaveLoadController.Instance;
+        
 
 
         #region Commands
@@ -40,39 +43,54 @@ namespace wpf_tmca.ViewModel
         public ICommand MouseUpItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseUpItem);
         public ICommand AddAssociationCommand => new RelayCommand(AddAssociation);
 
+        public ICommand SaveAsCommand => new RelayCommand(SaveAsToFile);
         public ICommand SaveCommand => new RelayCommand(SaveToFile);
         public ICommand LoadCommand => new RelayCommand(LoadFromFile);
 
-        public void SaveToFile()
+        //save as with chosen path
+        public void SaveAsToFile()
         {
             FileDialog fd = new SaveFileDialog();
             bool? result = fd.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                // saveLoadController.AsyncSaveToFile(d, path);
-                saveLoadController.SaveToFile(this.Items, fd.FileName);
+                Thread t = new Thread(() => saveLoadController.SaveToFile(this.Items, fd.FileName));
+                t.Start();
+                //saveLoadController.SaveToFile(this.Items, fd.FileName);
             }
         }
-
+        // save with current path
+        public void SaveToFile()
+        {
+            Thread t = new Thread(() => saveLoadController.SaveToFile(this.Items, path));
+        }
+        
+        public void PerformLoadFromFile()
+        {            
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    foreach (ItemViewModel item in saveLoadController.LoadFromFile(path))
+                    {
+                        this.Items.Add(item);
+                    }
+                });   
+        }
+        
         public void LoadFromFile()
         {
-            //return saveLoadController.AsyncLoadFromFile(path);            
             FileDialog fd = new OpenFileDialog();
             bool? result = fd.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                this.Items = saveLoadController.LoadFromFile(fd.FileName);
-                /*foreach (ItemViewModel item in saveLoadController.LoadFromFile( fd.FileName))
-                {
-                    this.Items.Add(item);
-                }*/
+                path = fd.FileName;
+                Thread t = new Thread(new ThreadStart(PerformLoadFromFile));
+                t.Start();
             }
         }
 
+    #endregion
 
-        #endregion
-
-        #region View
+    #region View
 
         private bool _statusBar, _toolBox;
         private string _statusBarVisability, _toolBoxVisability;
