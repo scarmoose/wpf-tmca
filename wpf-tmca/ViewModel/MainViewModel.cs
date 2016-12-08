@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Input;
 using System.Windows;
+using System.Linq;
 using wpf_tmca.ViewModel.Items;
 using wpf_tmca.Commands;
 using wpf_tmca.Commands.UndoRedoCommands;
@@ -11,6 +12,9 @@ using GalaSoft.MvvmLight;
 using wpf_tmca.Model;
 using System.Windows.Media;
 using System.Windows.Controls;
+using wpf_tmca.SaveAndLoad;
+using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace wpf_tmca.ViewModel
 {
@@ -18,9 +22,11 @@ namespace wpf_tmca.ViewModel
     {
         private bool _isAddingClassPressed;
         private bool _isAddingTextBoxPressed;
-        public ItemsCollection Items { get;  }
+        public ItemsCollection Items { get; private set; }
         public ObservableCollection<AssociationViewModel> Associations { get; }
         private CommandController commandController => CommandController.Instance;
+        private SaveLoadController saveLoadController => SaveLoadController.Instance;
+
 
         #region Commands
         public ICommand ExitCommand => commandController.ExitCommand;
@@ -33,6 +39,36 @@ namespace wpf_tmca.ViewModel
         public ICommand MouseMoveItemCommand => new RelayCommand<MouseEventArgs>(MouseMoveItem);
         public ICommand MouseUpItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseUpItem);
         public ICommand AddAssociationCommand => new RelayCommand(AddAssociation);
+
+        public ICommand SaveCommand => new RelayCommand(SaveToFile);
+        public ICommand LoadCommand => new RelayCommand(LoadFromFile);
+
+        public void SaveToFile()
+        {
+            FileDialog fd = new SaveFileDialog();
+            bool? result = fd.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                // saveLoadController.AsyncSaveToFile(d, path);
+                saveLoadController.SaveToFile(this.Items, fd.FileName);
+            }
+        }
+
+        public void LoadFromFile()
+        {
+            //return saveLoadController.AsyncLoadFromFile(path);            
+            FileDialog fd = new OpenFileDialog();
+            bool? result = fd.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                this.Items = saveLoadController.LoadFromFile(fd.FileName);
+                /*foreach (ItemViewModel item in saveLoadController.LoadFromFile( fd.FileName))
+                {
+                    this.Items.Add(item);
+                }*/
+            }
+        }
+
 
         #endregion
 
@@ -133,11 +169,11 @@ namespace wpf_tmca.ViewModel
             {
                 Console.WriteLine("TextBox");
                 item = new TextBoxViewModel() { Width = 60, Height = 60, X = position.X, Y = position.Y };
-                IsAddingTextBoxPressed = false; 
+                IsAddingTextBoxPressed = false;
             }
             if (item != null)
             {
-                commandController.AddAndExecute(new AddItemCommand(Items, item)); 
+                commandController.AddAndExecute(new AddItemCommand(Items, item));
             }
         }
 
@@ -180,7 +216,7 @@ namespace wpf_tmca.ViewModel
             isAddingAssociation = true;
             RaisePropertyChanged(() => ModeOpacity);
         }
-        
+
         private ItemViewModel TargetItem(MouseEventArgs e)
         {
             var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
@@ -233,7 +269,7 @@ namespace wpf_tmca.ViewModel
                 var item = TargetItem(e);
 
                 if (addingAssociationFrom == null) { addingAssociationFrom = item; addingAssociationFrom.IsSelected = true; }
-                
+
                 else if (addingAssociationFrom.ItemNumber != item.ItemNumber)
                 {
                     commandController.AddAndExecute(new AddAssociationCommand(Associations, new DependencyViewModel() { From = addingAssociationFrom, To = item }));

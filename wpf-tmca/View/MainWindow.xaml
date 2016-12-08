@@ -72,7 +72,7 @@
             </ItemsControl>
 
 
-            <ec:ItemsListBox x:Name="ItemControl" ItemsSource="{Binding Items}" Style="{StaticResource ItemCanvasStyle}" ItemContainerStyle="{StaticResource ItemContainerStyle}">
+            <ec:ItemsListBox x:Name="ItemControl" ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ItemCanvasStyle}" ItemContainerStyle="{StaticResource ItemContainerStyle}">
                 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">

@@ -13,7 +13,7 @@
                     <Image Source="/Images/new-file-icon.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Open Project">
+            <MenuItem Header="Open Project" Command="{Binding LoadCommand}">
                 <MenuItem.Icon>
                     <Image Source="/Images/open-file-icon.png"/>
                 </MenuItem.Icon>
@@ -23,7 +23,7 @@
                     <Image Source="/Images/Save-icon.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Save As ...">
+            <MenuItem Header="Save As ..." Command="{Binding SaveCommand}">
                 <MenuItem.Icon>
                     <Image Source="/Images/Save-as-icon.png"/>
                 </MenuItem.Icon>
@@ -32,58 +32,58 @@
             <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
         </MenuItem>
         <MenuItem Header="_Edit">
-                <MenuItem Header="Undo" Command="{Binding UndoCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/arrow-undo-icon.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Redo" Command="{Binding RedoCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/arrow-redo-icon.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <Separator/>
-                <MenuItem Header="Cut" Command="Cut">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/cut-icon.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Copy" Command="Copy">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/Copy-icon.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Paste" Command="Paste">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/Paste-icon.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Delete" Command="Delete">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/Button-Close-icon.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
+            <MenuItem Header="Undo" Command="{Binding UndoCommand, UpdateSourceTrigger=PropertyChanged}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/arrow-undo-icon.png"/>
+                </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="_View">
+            <MenuItem Header="Redo" Command="{Binding RedoCommand, UpdateSourceTrigger=PropertyChanged}">
+                <MenuItem.Icon>
+                    <Image Source="/Images/arrow-redo-icon.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator/>
+            <MenuItem Header="Cut" Command="Cut">
+                <MenuItem.Icon>
+                    <Image Source="/Images/cut-icon.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Copy" Command="Copy">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Copy-icon.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Paste" Command="Paste">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Paste-icon.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Delete" Command="Delete">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Button-Close-icon.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="_View">
             <MenuItem Header="Toolbox" IsCheckable="True" IsChecked="True" Command="{Binding HideToolBoxCommand}"/>
-                <MenuItem Header="Statusbar" IsCheckable="True" IsChecked="True" Command="{Binding HideStatusBarCommand}"/>
-                <Separator/>
-                <MenuItem Header="Zoom In">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/Zoom-In-icon.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Zoom Out">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/Zoom-Out-icon.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
+            <MenuItem Header="Statusbar" IsCheckable="True" IsChecked="True" Command="{Binding HideStatusBarCommand}"/>
+            <Separator/>
+            <MenuItem Header="Zoom In">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Zoom-In-icon.png"/>
+                </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="_Insert">
-                <MenuItem Header="New Class"/>
-                <MenuItem Header="New Dependency"/>
-                <MenuItem Header="New TextBox"/>
+            <MenuItem Header="Zoom Out">
+                <MenuItem.Icon>
+                    <Image Source="/Images/Zoom-Out-icon.png"/>
+                </MenuItem.Icon>
             </MenuItem>
+        </MenuItem>
+        <MenuItem Header="_Insert">
+            <MenuItem Header="New Class"/>
+            <MenuItem Header="New Dependency"/>
+            <MenuItem Header="New TextBox"/>
+        </MenuItem>
         <MenuItem Header="_Help">
             <MenuItem Header="Help"/>
             <Separator/>

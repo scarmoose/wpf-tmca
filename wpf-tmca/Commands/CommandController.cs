@@ -17,12 +17,14 @@ namespace wpf_tmca.Commands
 
         private CommandController() : base()
         {  
+            this.UndoCommand = new RelayCommand(Undo, CanUndo); 
+            this.RedoCommand = new RelayCommand(Redo, CanRedo);
         }
 
         public static CommandController Instance => _self;
 
-        public RelayCommand UndoCommand => new RelayCommand(Undo, CanUndo);
-        public RelayCommand RedoCommand => new RelayCommand(Redo, CanRedo);
+        public RelayCommand UndoCommand { get; private set; } 
+        public RelayCommand RedoCommand { get; private set; } 
         public RelayCommand ExitCommand => new RelayCommand(ExitProgram);
 
         public void ExitProgram()

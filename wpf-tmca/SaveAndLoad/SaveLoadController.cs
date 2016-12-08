@@ -7,6 +7,8 @@ using System.Threading;
 using wpf_tmca.Model;
 using System.IO;
 using System.Xml.Serialization;
+using wpf_tmca.ViewModel;
+using wpf_tmca.ViewModel.Items;
 
 namespace wpf_tmca.SaveAndLoad
 {
@@ -16,7 +18,7 @@ namespace wpf_tmca.SaveAndLoad
 
         private SaveLoadController() { }
 
-        private void SaveToFile(Diagram d, string path)
+        public void SaveToFile(Diagram d, string path)
         {
             using (FileStream fs = File.Create(path))
             {
@@ -25,24 +27,40 @@ namespace wpf_tmca.SaveAndLoad
             }
         }
 
-        private Diagram LoadFromFile(string path)
+        public void SaveToFile(ItemsCollection d, string path)
+        {
+            using (FileStream fs = File.Create(path))
+            {
+                XmlSerializer s = new XmlSerializer(typeof(ItemsCollection), new Type[] { typeof(Item), typeof(ClassViewModel) });
+                s.Serialize(fs, d);
+            }
+        }
+
+        public ItemsCollection LoadFromFile(string path)
         {
             using (FileStream fs = File.OpenRead(path))
             {
-                XmlSerializer s = new XmlSerializer(typeof(Diagram));
-                Diagram d = s.Deserialize(fs) as Diagram;
+                XmlSerializer s = new XmlSerializer(typeof(ItemsCollection), new Type[] { typeof(Item), typeof(ClassViewModel) });
+                ItemsCollection d = s.Deserialize(fs) as ItemsCollection;
                 return d;
             }
         }
 
+        //public Diagram LoadFromFile(string path)
+        //{
+        //    using (FileStream fs = File.OpenRead(path))
+        //    {
+        //        XmlSerializer s = new XmlSerializer(typeof(Diagram));
+        //        Diagram d = s.Deserialize(fs) as Diagram;
+        //        return d;
+        //    }
+        //}
+        
         public async void AsyncSaveToFile(Diagram d, string path)
         {
             await Task.Run(() => SaveToFile(d, path));
         }
 
-        public async Task<Diagram> AsyncLoadFromFile(string path)
-        {
-            return await Task.Run(() => LoadFromFile(path));
-        }
+        
     }
 }
