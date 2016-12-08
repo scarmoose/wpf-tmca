@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,10 @@ namespace wpf_tmca.Commands.UndoRedoCommands
 {
     public class AddItemCommand : IUndoRedoCommand
     {
-        private ItemsCollection items;
+        private ObservableCollection<ItemViewModel> items;
         private ItemViewModel item;
 
-        public AddItemCommand(ItemsCollection _items, ItemViewModel _item)
+        public AddItemCommand(ObservableCollection<ItemViewModel> _items, ItemViewModel _item)
         {
             items = _items;
             item = _item;

@@ -88,7 +88,7 @@
     <Compile Include="ViewModel\Associations\AssociationViewModel.cs" />
     <Compile Include="ViewModel\Associations\DependencyViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\ItemsCollection.cs" />
+    <Compile Include="ViewModel\DiagramRepresentation.cs" />
     <Compile Include="ViewModel\Items\ClassViewModel.cs" />
     <Compile Include="ViewModel\Items\ItemViewModel.cs" />
     <Compile Include="ViewModel\Items\TextBoxViewModel.cs" />
