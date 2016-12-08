@@ -7,14 +7,28 @@
              xmlns:userControls="clr-namespace:wpf_tmca.View.UserControls"
              xmlns:viewModel="clr-namespace:wpf_tmca.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="150">
+             d:DesignHeight="700" d:DesignWidth="150">
     <Border BorderBrush="Black" BorderThickness="0,0,0.2,0">
         <StackPanel>
             <ToggleButton Content="New Class" IsChecked="{Binding IsAddingClassPressed}" Width="100" Height="70" Margin="10" />
             <Separator Margin="5"/>
+            <ToggleButton Content="New TextBox" IsChecked="{Binding IsAddingTextBoxPressed}" Width="100" Height="70" Margin="10" />
+            <Separator Margin="5"/>
             <ToggleButton Content="New Association" IsChecked="{Binding IsAddingAssociationPressed}" Width="100" Height="70" Margin="10"/>
             <Separator Margin="5"/>
-            <ToggleButton Content="New TextBox" IsChecked="{Binding IsAddingTextBoxPressed}" Width="100" Height="70" Margin="10" />
+
+            <TextBlock Text="Associations" Width="100" Margin="10" TextAlignment="Center" FontWeight="Bold"/>
+            
+            <DataGrid x:Name="associationsControl" SelectionMode="Extended" Margin="0" Height="200" ItemsSource="{Binding Associations}" HeadersVisibility="Column" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" Width="100">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="From" Width="*" Binding="{Binding From, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="To" Width="*" Binding="{Binding To, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button Command="{Binding DeleteAssociationsCommand}" CommandParameter="{Binding ElementName=associationsControl, Path=SelectedItems}" Width="100" Height="40" Margin="10" IsEnabled="{Binding ElementName=associationsControl, Path=SelectedItems.Count}" >
+                <TextBlock TextAlignment="Center">Delete<LineBreak/>Association</TextBlock>
+            </Button>
         </StackPanel>
     </Border>
 </UserControl>

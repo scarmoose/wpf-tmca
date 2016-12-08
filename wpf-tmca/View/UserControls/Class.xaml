@@ -26,19 +26,19 @@
         <TextBlock IsHitTestVisible="False" FontSize="20" Text="{Binding ItemNumber}" TextAlignment="Center" VerticalAlignment="Top" Foreground="White"/>
         <TextBox HorizontalAlignment="Stretch"
 		 MinHeight="23"
-		 Margin="5,5,5,5"
+		 Margin="8"
 		 TextWrapping="Wrap"
 		 Text=""
-		 TextAlignment="Center" 
+		 TextAlignment="Left" 
          VerticalAlignment="Center"
 		 MinWidth="40"
          MaxWidth="180"/>
         <TextBox HorizontalAlignment="Stretch"
 		 MinHeight="23"
-		 Margin="5,5,5,5"
+		 Margin="8"
 		 TextWrapping="Wrap"
 		 Text=""
-		 TextAlignment="Center" 
+		 TextAlignment="Left" 
          VerticalAlignment="Bottom"
 		 MinWidth="40"
          MaxWidth="180"/>

@@ -118,5 +118,7 @@ namespace wpf_tmca.ViewModel
         public double CanvasCenterY { get { return Y + Height / 2; } set { Y = value - Height / 2; NotifyPropertyChanged(() => Y); } }
 
         #endregion
+
+        public override string ToString() => Item.ToString();
     }
 }

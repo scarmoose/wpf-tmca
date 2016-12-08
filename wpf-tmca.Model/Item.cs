@@ -18,5 +18,7 @@ namespace wpf_tmca.Model
         public double Width { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
+
+        public override string ToString() => ItemNumber.ToString();
     }
 }

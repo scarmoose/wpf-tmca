@@ -14,7 +14,7 @@
         xmlns:ec="clr-namespace:wpf_tmca.View.Components"
         xmlns:models="clr-namespace:wpf_tmca.ViewModel.Items"
         xmlns:b="clr-namespace:wpf_tmca.View.Behaviors"
-        Title="TMCA UML Editor" Height="600" Width="800" Icon="/Images/Holidays-Bat-icon.png">
+        Title="TMCA UML Editor" Height="800" Width="1100" Icon="/Images/Holidays-Bat-icon.png">
     <Window.DataContext>
         <viewModel:MainViewModel />
     </Window.DataContext>

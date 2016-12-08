@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.Threading;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace wpf_tmca.ViewModel
 {
@@ -29,8 +30,6 @@ namespace wpf_tmca.ViewModel
         public ObservableCollection<AssociationViewModel> Associations { get; }
         private CommandController commandController => CommandController.Instance;
         private SaveLoadController saveLoadController => SaveLoadController.Instance;
-        
-
 
         #region Commands
         public ICommand ExitCommand => commandController.ExitCommand;
@@ -42,7 +41,8 @@ namespace wpf_tmca.ViewModel
         public ICommand MouseDownItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseDownItem);
         public ICommand MouseMoveItemCommand => new RelayCommand<MouseEventArgs>(MouseMoveItem);
         public ICommand MouseUpItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseUpItem);
-        public ICommand DeleteItemCommand => new RelayCommand(deleteItem, canDelete);
+        public ICommand DeleteItemCommand => new RelayCommand(deleteItem, canDeleteItem);
+        public ICommand DeleteAssociationsCommand => new RelayCommand<IList>(deleteAssociations);
 
         public ICommand SaveAsCommand => new RelayCommand(SaveAsToFile);
         public ICommand SaveCommand => new RelayCommand(SaveToFile);
@@ -234,7 +234,6 @@ namespace wpf_tmca.ViewModel
 
         private bool _isAddingAssociation;
         private ItemViewModel _selectedItem;
-        private AssociationViewModel _selectedAssociation;
 
         private Point initialMousePosition;
 
@@ -244,12 +243,6 @@ namespace wpf_tmca.ViewModel
         {
             var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
             return (ItemViewModel)shapeVisualElement.DataContext;
-        }
-
-        private AssociationViewModel TargetAssociation(MouseEventArgs e)
-        {
-            var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
-            return (AssociationViewModel)shapeVisualElement.DataContext;
         }
 
         private static T FindParentOfType<T>(DependencyObject o)
@@ -301,7 +294,6 @@ namespace wpf_tmca.ViewModel
         private void MouseUpItem(MouseButtonEventArgs e)
         {
             var item = TargetItem(e);
-            //var association = TargetAssociation(e);
 
             if (_selectedItem == null)
             {
@@ -313,20 +305,14 @@ namespace wpf_tmca.ViewModel
                 _selectedItem.IsSelected = false;
                 _selectedItem = null;
             }
-            else if (!IsAddingAssociationPressed && _selectedItem.ItemNumber != item.ItemNumber)
+            else if ((!IsAddingAssociationPressed && _selectedItem.ItemNumber != item.ItemNumber) || (IsAddingAssociationPressed && _selectedItem.Type == EItem.TextBox && _selectedItem.ItemNumber != item.ItemNumber))
             {
                 _selectedItem.IsSelected = false;
                 _selectedItem = item;
                 _selectedItem.IsSelected = true;
             }
-            /*
-            if(_selectedAssociation == null)
-            {
-                _selectedAssociation = association;
-                _selectedAssociation.IsSelected = true;
-            }*/
 
-            if (IsAddingAssociationPressed && item.Type == EItem.Class && _selectedItem.ItemNumber != item.ItemNumber)
+            if (item != null && IsAddingAssociationPressed && item.Type == EItem.Class && _selectedItem.Type == EItem.Class && _selectedItem.ItemNumber != item.ItemNumber)
             {
                 commandController.AddAndExecute(new AddAssociationCommand(Associations, new DependencyViewModel() { From = _selectedItem, To = item }));
                 _selectedItem.IsSelected = false;
@@ -349,21 +335,22 @@ namespace wpf_tmca.ViewModel
                     _selectedItem.IsSelected = false;
                 }
             }
-            else
-            {
-
-            }
         }
 
         #endregion
 
-        #region deleteItem
+        #region delete
 
-        private bool canDelete() => _selectedItem != null;
+        private bool canDeleteItem() => _selectedItem != null;
 
         private void deleteItem()
         {
             commandController.AddAndExecute(new RemoveItemsCommand(Items, Associations, new List<ItemViewModel>() { _selectedItem }));
+        }
+
+        private void deleteAssociations(IList _associations)
+        {
+            commandController.AddAndExecute(new RemoveAssociationsCommand(Associations, _associations.Cast<AssociationViewModel>().ToList()));
         }
 
         #endregion
