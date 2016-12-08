@@ -33,7 +33,7 @@ namespace wpf_tmca.ViewModel
             }
         }
 
-        protected Item Item { get; }
+        protected IItem Item { get; }
         protected ItemViewModel(Item item)
         {
             Item = item;

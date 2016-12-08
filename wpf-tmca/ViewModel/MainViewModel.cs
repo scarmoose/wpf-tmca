@@ -16,6 +16,7 @@ using wpf_tmca.SaveAndLoad;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace wpf_tmca.ViewModel
 {
@@ -259,8 +260,8 @@ namespace wpf_tmca.ViewModel
 
         private Point RelativeMousePosition(MouseEventArgs e)
         {
-            var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
-            var canvas = FindParentOfType<Canvas>(shapeVisualElement);
+            var itemVisualElement = (FrameworkElement)e.MouseDevice.Target;
+            var canvas = FindParentOfType<Canvas>(itemVisualElement);
             return Mouse.GetPosition(canvas);
         }
 
@@ -362,16 +363,7 @@ namespace wpf_tmca.ViewModel
 
         private void deleteItem()
         {
-            /*
-            foreach(AssociationViewModel association in this.Associations)
-            {
-                if (association.From == _selectedItem || association.To == _selectedItem)
-                {
-                    Associations.Remove(association);
-                }
-            }*/
-
-            Items.Remove(_selectedItem);
+            commandController.AddAndExecute(new RemoveItemsCommand(Items, Associations, new List<ItemViewModel>() { _selectedItem }));
         }
 
         #endregion
