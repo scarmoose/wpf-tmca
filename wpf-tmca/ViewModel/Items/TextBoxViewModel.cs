@@ -12,7 +12,7 @@ namespace wpf_tmca.ViewModel.Items
         public TextBoxViewModel(Item item) : base(item)
         {
             Width = 60;
-            Height = 23;
+            Height = 40;
         }
 
         public TextBoxViewModel():this(new Item() { Type=EItem.TextBox})

@@ -162,13 +162,13 @@ namespace wpf_tmca.ViewModel
             if (IsAddingClassPressed)
             {
                 Console.WriteLine("Class");
-                item = new ClassViewModel() { Width = 60, Height = 80, X = position.X, Y = position.Y };
+                item = new ClassViewModel() { X = position.X, Y = position.Y };
                 IsAddingClassPressed = false;
             }
             else if (IsAddingTextBoxPressed)
             {
                 Console.WriteLine("TextBox");
-                item = new TextBoxViewModel() { Width = 60, Height = 60, X = position.X, Y = position.Y };
+                item = new TextBoxViewModel() { X = position.X, Y = position.Y };
                 IsAddingTextBoxPressed = false;
             }
             if (item != null)

@@ -21,7 +21,7 @@ namespace wpf_tmca.ViewModel
         
         public bool IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
         
-        public Brush SelectedColor => IsSelected ? Brushes.BlueViolet : Brushes.Black;
+        public Brush SelectedColor => IsSelected ? Brushes.DarkRed : Brushes.Black;
 
         public bool IsConnectingShapes
         {
@@ -104,53 +104,11 @@ namespace wpf_tmca.ViewModel
         public int ItemNumber => Item.ItemNumber;
         public EItem Type => Item.Type;
 
-        /*
-        public double Height
-        {
-            get { return Item.Height; }
-            set
-            {
-                Item.Height = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(CenterY));
-            }
-        }*/
-        public double Height { get { return Item.Height; } set { Item.Height = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); NotifyPropertyChanged(() => CenterY); } }
-        /*
-        public double Width
-        {
-            get { return Item.Width; }
-            set
-            {
-                Item.Width = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(CenterX));
-            }
-        }*/
+
+        public double Height { get { Console.WriteLine(Item.Height); return Item.Height; } set { Item.Height = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); NotifyPropertyChanged(() => CenterY); } }
         public double Width { get { return Item.Width; } set { Item.Width = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); NotifyPropertyChanged(() => CenterX); } }
-        /*
-        public double X
-        {
-            get { return Item.X; }
-            set
-            {
-                Item.X = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(CenterX));
-            }
-        }*/
+       
         public double X { get { return Item.X; } set { Item.X = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); } }
-        /*
-        public double Y
-        {
-            get { return Item.Y; }
-            set
-            {
-                Item.Y = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(CenterY));
-            }
-        }*/
         public double Y { get { return Item.Y; } set { Item.Y = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); } }
 
         public double CenterX => Width / 2 + X;
