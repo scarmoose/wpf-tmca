@@ -14,7 +14,7 @@
             <Separator Margin="5"/>
             <ToggleButton Content="New TextBox" IsChecked="{Binding IsAddingTextBoxPressed}" Width="100" Height="70" Margin="10" />
             <Separator Margin="5"/>
-            <ToggleButton Content="New Association" IsChecked="{Binding IsAddingAssociationPressed}" Width="100" Height="70" Margin="10"/>
+            <ToggleButton Content="New Dependency" IsChecked="{Binding IsAddingAssociationPressed}" Width="100" Height="70" Margin="10"/>
             <Separator Margin="5"/>
 
             <TextBlock Text="Associations" Width="100" Margin="10" TextAlignment="Center" FontWeight="Bold"/>

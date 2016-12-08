@@ -74,5 +74,12 @@ namespace wpf_tmca.Commands
             RedoCommand.RaiseCanExecuteChanged();
         }
 
+        public void reset()
+        {
+            _redoStack.Clear();
+            _undoStack.Clear();
+            UpdateCommandStatus();
+        }
+
     }
 }

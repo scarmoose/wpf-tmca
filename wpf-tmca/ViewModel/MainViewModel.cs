@@ -23,11 +23,12 @@ namespace wpf_tmca.ViewModel
 {
     class MainViewModel : BaseViewModel
     {
-        string path;
-        private bool _isAddingClassPressed;
-        private bool _isAddingTextBoxPressed;
+        private bool _isAddingClassPressed, _isAddingTextBoxPressed, _isAddingAssociation, _itemMoving, _statusBar, _toolBox;
+        private string _statusBarVisability, _toolBoxVisability, path;
+        private ItemViewModel _selectedItem;
+        private Point initialMousePosition, initialItemPosition;
         public ItemsCollection Items { get; private set; }
-        public ObservableCollection<AssociationViewModel> Associations { get; }
+        public ObservableCollection<AssociationViewModel> Associations { get; private set; }
         private CommandController commandController => CommandController.Instance;
         private SaveLoadController saveLoadController => SaveLoadController.Instance;
 
@@ -38,7 +39,11 @@ namespace wpf_tmca.ViewModel
         public RelayCommand<MouseButtonEventArgs> CreateItemCommand => new RelayCommand<MouseButtonEventArgs>(OnClickCreateItem, CanCreateItem);
         public ICommand UndoCommand => commandController.UndoCommand;
         public ICommand RedoCommand => commandController.RedoCommand;
+
         public ICommand MouseDownItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseDownItem);
+        public ICommand AddNewClassCommand => new RelayCommand(addNewClass);
+        public ICommand AddNewTextBoxCommand => new RelayCommand(addNewTextBox);
+        public ICommand AddNewDependencyCommand => new RelayCommand(addNewDependency);
         public ICommand MouseMoveItemCommand => new RelayCommand<MouseEventArgs>(MouseMoveItem);
         public ICommand MouseUpItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseUpItem);
         public ICommand DeleteItemCommand => new RelayCommand(deleteItem, canDeleteItem);
@@ -47,7 +52,70 @@ namespace wpf_tmca.ViewModel
         public ICommand SaveAsCommand => new RelayCommand(SaveAsToFile);
         public ICommand SaveCommand => new RelayCommand(SaveToFile);
         public ICommand LoadCommand => new RelayCommand(LoadFromFile);
+        public ICommand newProjectCommand => new RelayCommand(newProject);
+        #endregion
 
+        public MainViewModel() : base()
+        {
+            _statusBar = true;
+            _toolBox = true;
+
+            Items = new ItemsCollection();
+            Associations = new ObservableCollection<AssociationViewModel>();
+        }
+
+        #region Adding
+        public bool IsAddingClassPressed
+        {
+            get { return _isAddingClassPressed; }
+            set
+            {
+                _isAddingClassPressed = value;
+                OnPropertyChanged();
+                CreateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool IsAddingTextBoxPressed
+        {
+            get { return _isAddingTextBoxPressed; }
+            set
+            {
+                _isAddingTextBoxPressed = value;
+                OnPropertyChanged();
+                CreateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool IsAddingAssociationPressed
+        {
+            get { return _isAddingAssociation; }
+            set
+            {
+                _isAddingAssociation = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void addNewClass()
+        {
+            ItemViewModel item = new ClassViewModel() { X = 10, Y = 10 };
+            commandController.AddAndExecute(new AddItemCommand(Items, item));
+        }
+
+        public void addNewTextBox()
+        {
+            ItemViewModel item = new TextBoxViewModel() { X = 10, Y = 10 };
+            commandController.AddAndExecute(new AddItemCommand(Items, item));
+        }
+
+        public void addNewDependency()
+        {
+            IsAddingAssociationPressed = true;
+        }
+        #endregion
+
+        #region Save and Load
         //save as with chosen path
         public void SaveAsToFile()
         {
@@ -89,12 +157,26 @@ namespace wpf_tmca.ViewModel
             }
         }
 
-    #endregion
+        public void newProject()
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure, you want to create a new project?" + 
+                Environment.NewLine +
+                Environment.NewLine +
+                "Remember to save your project before you create a new!", "New Project", MessageBoxButton.OKCancel);
 
-    #region View
+            if (result == MessageBoxResult.OK)
+            {
+                Items.Clear();
+                Associations.Clear();
+                Item._itemNumber = 0;
+                commandController.reset();
+                path = null;
+            }
+        }
 
-        private bool _statusBar, _toolBox;
-        private string _statusBarVisability, _toolBoxVisability;
+        #endregion
+
+        #region View
 
         public void HideStatusBar()
         {
@@ -158,15 +240,6 @@ namespace wpf_tmca.ViewModel
 
         #endregion
 
-        public MainViewModel() : base()
-        {
-            _statusBar = true;
-            _toolBox = true;
-
-            Items = new ItemsCollection();
-            Associations = new ObservableCollection<AssociationViewModel>();
-        }
-
         #region MouseEvents
 
         private bool CanCreateItem(MouseButtonEventArgs e)
@@ -195,49 +268,6 @@ namespace wpf_tmca.ViewModel
                 commandController.AddAndExecute(new AddItemCommand(Items, item));
             }
         }
-
-        #endregion
-
-        public bool IsAddingClassPressed
-        {
-            get { return _isAddingClassPressed; }
-            set
-            {
-                _isAddingClassPressed = value;
-                OnPropertyChanged();
-                CreateItemCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        public bool IsAddingTextBoxPressed
-        {
-            get { return _isAddingTextBoxPressed; }
-            set
-            {
-                _isAddingTextBoxPressed = value;
-                OnPropertyChanged();
-                CreateItemCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        public bool IsAddingAssociationPressed
-        {
-            get { return _isAddingAssociation; }
-            set
-            {
-                _isAddingAssociation = value;
-                OnPropertyChanged();
-            }
-        }
-
-        #region Association
-
-        private bool _isAddingAssociation;
-        private ItemViewModel _selectedItem;
-
-        private Point initialMousePosition;
-
-        private Point initialItemPosition;
 
         private ItemViewModel TargetItem(MouseEventArgs e)
         {
@@ -271,8 +301,6 @@ namespace wpf_tmca.ViewModel
                 e.MouseDevice.Target.CaptureMouse();
             }
         }
-
-        private bool _itemMoving;
 
         private void MouseMoveItem(MouseEventArgs e)
         {
@@ -333,6 +361,7 @@ namespace wpf_tmca.ViewModel
                 if (_selectedItem != null)
                 {
                     _selectedItem.IsSelected = false;
+                    _selectedItem = null;
                 }
             }
         }

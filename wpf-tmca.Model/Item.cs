@@ -9,7 +9,7 @@ namespace wpf_tmca.Model
 {
     public class Item : IItem
     {
-        private static int _itemNumber;
+        public static int _itemNumber;
 
         public List<string> Context { get; set; }
         public double Height { get; set; }

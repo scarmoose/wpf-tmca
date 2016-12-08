@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Menu>
         <MenuItem Header="_File">
-            <MenuItem Header="New Project">
+            <MenuItem Header="New Project" Command="{Binding newProjectCommand}">
                 <MenuItem.Icon>
                     <Image Source="/Images/new-file-icon.png" />
                 </MenuItem.Icon>
@@ -80,9 +80,9 @@
             </MenuItem>
         </MenuItem>
         <MenuItem Header="_Insert">
-            <MenuItem Header="New Class"/>
-            <MenuItem Header="New Dependency"/>
-            <MenuItem Header="New TextBox"/>
+            <MenuItem Header="New Class" Command="{Binding AddNewClassCommand}"/>
+            <MenuItem Header="New TextBox" Command="{Binding AddNewTextBoxCommand}"/>
+            <MenuItem Header="New Dependency" Command="{Binding AddNewDependencyCommand}"/>
         </MenuItem>
         <MenuItem Header="_Help">
             <MenuItem Header="Help"/>
