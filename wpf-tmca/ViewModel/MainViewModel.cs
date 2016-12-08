@@ -204,7 +204,6 @@ namespace wpf_tmca.ViewModel
         #region Association
 
         private bool isAddingAssociation;
-        public double ModeOpacity => isAddingAssociation ? 0.4 : 1.0;
         private ItemViewModel addingAssociationFrom;
 
         private Point initialMousePosition;
@@ -214,7 +213,6 @@ namespace wpf_tmca.ViewModel
         private void AddAssociation()
         {
             isAddingAssociation = true;
-            RaisePropertyChanged(() => ModeOpacity);
         }
 
         private ItemViewModel TargetItem(MouseEventArgs e)
@@ -277,8 +275,6 @@ namespace wpf_tmca.ViewModel
 
                     isAddingAssociation = false;
                     addingAssociationFrom = null;
-
-                    RaisePropertyChanged(() => ModeOpacity);
                 }
             }
             else

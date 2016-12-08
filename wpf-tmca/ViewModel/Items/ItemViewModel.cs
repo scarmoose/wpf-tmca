@@ -19,19 +19,9 @@ namespace wpf_tmca.ViewModel
         private Point _initialItemPostion;
         private CommandController _CommandController => CommandController.Instance;
         
-        /*
-        public bool IsSelected
-        {
-            get { return _isSelected; }
-            set
-            {
-                _isSelected = value;
-                OnPropertyChanged();
-            }
-        }*/
         public bool IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
         
-        public Brush SelectedColor => IsSelected ? Brushes.Red : Brushes.Yellow;
+        public Brush SelectedColor => IsSelected ? Brushes.BlueViolet : Brushes.Black;
 
         public bool IsConnectingShapes
         {
