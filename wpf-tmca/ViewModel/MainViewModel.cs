@@ -29,6 +29,12 @@ namespace wpf_tmca.ViewModel
         private Point initialMousePosition, initialItemPosition;
         public ItemsCollection Items { get; private set; }
         public ObservableCollection<AssociationViewModel> Associations { get; private set; }
+        string path;
+        private bool _isAddingClassPressed;
+        private bool _isAddingTextBoxPressed;
+        public DiagramRepresentation diagram { get; private set; }
+        public ObservableCollection<ItemViewModel> Items { get; private set; }
+        public ObservableCollection<AssociationViewModel> Associations { get; private set; }
         private CommandController commandController => CommandController.Instance;
         private SaveLoadController saveLoadController => SaveLoadController.Instance;
 
@@ -116,6 +122,20 @@ namespace wpf_tmca.ViewModel
         #endregion
 
         #region Save and Load
+
+        public MainViewModel() : base()
+        {
+            _statusBar = true;
+            _toolBox = true;
+
+            Items = new ObservableCollection<ItemViewModel>();
+            Associations = new ObservableCollection<AssociationViewModel>();
+            diagram = new DiagramRepresentation();
+            diagram.items = Items;
+            diagram.associations = Associations;
+        }
+
+
         //save as with chosen path
         public void SaveAsToFile()
         {
@@ -123,7 +143,7 @@ namespace wpf_tmca.ViewModel
             bool? result = fd.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                Thread t = new Thread(() => saveLoadController.SaveToFile(this.Items, fd.FileName));
+                Thread t = new Thread(() => saveLoadController.SaveToFile(diagram, fd.FileName));
                 t.Start();
                 //saveLoadController.SaveToFile(this.Items, fd.FileName);
             }
@@ -131,17 +151,26 @@ namespace wpf_tmca.ViewModel
         // save with current path
         public void SaveToFile()
         {
-            Thread t = new Thread(() => saveLoadController.SaveToFile(this.Items, path));
+            Thread t = new Thread(() => saveLoadController.SaveToFile(diagram, path));
         }
         
         public void PerformLoadFromFile()
         {            
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    foreach (ItemViewModel item in saveLoadController.LoadFromFile(path))
+                    diagram = saveLoadController.LoadFromFile(path);
+                    //Items = new ObservableCollection<ItemViewModel>();
+                    //Associations = new ObservableCollection<AssociationViewModel>();
+                    foreach (ItemViewModel item in diagram.items)
                     {
                         this.Items.Add(item);
                     }
+                    foreach (AssociationViewModel ass in diagram.associations)
+                    {
+                        this.Associations.Add(ass);
+                    }
+                    //Items = diagram.items;
+                    //Associations = diagram.associations;
                 });   
         }
         
@@ -239,6 +268,8 @@ namespace wpf_tmca.ViewModel
         }
 
         #endregion
+
+        
 
         #region MouseEvents
 

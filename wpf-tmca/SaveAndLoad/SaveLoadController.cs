@@ -9,6 +9,8 @@ using System.IO;
 using System.Xml.Serialization;
 using wpf_tmca.ViewModel;
 using wpf_tmca.ViewModel.Items;
+using System.Collections.ObjectModel;
+using wpf_tmca.ViewModel.Associations;
 
 namespace wpf_tmca.SaveAndLoad
 {
@@ -18,30 +20,23 @@ namespace wpf_tmca.SaveAndLoad
 
         private SaveLoadController() { }
 
-        public void SaveToFile(Diagram d, string path)
+        public void SaveToFile(DiagramRepresentation d, string path)
         {
             using (FileStream fs = File.Create(path))
             {
-                XmlSerializer s = new XmlSerializer(typeof(Diagram));
+                XmlSerializer s = new XmlSerializer(typeof(DiagramRepresentation), new Type[] { typeof(Item), typeof(Association),
+                    typeof(ClassViewModel), typeof(AssociationViewModel), typeof(DependencyViewModel) });
                 s.Serialize(fs, d);
             }
         }
 
-        public void SaveToFile(ItemsCollection d, string path)
-        {
-            using (FileStream fs = File.Create(path))
-            {
-                XmlSerializer s = new XmlSerializer(typeof(ItemsCollection), new Type[] { typeof(Item), typeof(ClassViewModel) });
-                s.Serialize(fs, d);
-            }
-        }
-
-        public ItemsCollection LoadFromFile(string path)
+        public DiagramRepresentation LoadFromFile(string path)
         {
             using (FileStream fs = File.OpenRead(path))
             {
-                XmlSerializer s = new XmlSerializer(typeof(ItemsCollection), new Type[] { typeof(Item), typeof(ClassViewModel) });
-                ItemsCollection d = s.Deserialize(fs) as ItemsCollection;
+                XmlSerializer s = new XmlSerializer(typeof(DiagramRepresentation), new Type[] { typeof(Item), typeof(Association),
+                    typeof(ClassViewModel), typeof(AssociationViewModel), typeof(DependencyViewModel) });
+                DiagramRepresentation d = s.Deserialize(fs) as DiagramRepresentation;
                 return d;
             }
         }
@@ -56,10 +51,10 @@ namespace wpf_tmca.SaveAndLoad
         //    }
         //}
         
-        public async void AsyncSaveToFile(Diagram d, string path)
-        {
-            await Task.Run(() => SaveToFile(d, path));
-        }
+        //public async void AsyncSaveToFile(Diagram d, string path)
+        //{
+        //    await Task.Run(() => SaveToFile(d, path));
+        //}
 
         
     }
