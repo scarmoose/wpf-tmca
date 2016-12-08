@@ -41,7 +41,7 @@ namespace wpf_tmca.ViewModel
         public ICommand MouseDownItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseDownItem);
         public ICommand MouseMoveItemCommand => new RelayCommand<MouseEventArgs>(MouseMoveItem);
         public ICommand MouseUpItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseUpItem);
-        public ICommand AddAssociationCommand => new RelayCommand(AddAssociation);
+        public ICommand DeleteItemCommand => new RelayCommand(deleteItem, canDelete);
 
         public ICommand SaveAsCommand => new RelayCommand(SaveAsToFile);
         public ICommand SaveCommand => new RelayCommand(SaveToFile);
@@ -219,24 +219,36 @@ namespace wpf_tmca.ViewModel
             }
         }
 
+        public bool IsAddingAssociationPressed
+        {
+            get { return _isAddingAssociation; }
+            set
+            {
+                _isAddingAssociation = value;
+                OnPropertyChanged();
+            }
+        }
+
         #region Association
 
-        private bool isAddingAssociation;
-        private ItemViewModel addingAssociationFrom;
+        private bool _isAddingAssociation;
+        private ItemViewModel _selectedItem;
+        private AssociationViewModel _selectedAssociation;
 
         private Point initialMousePosition;
 
-        private Point initialShapePosition;
-
-        private void AddAssociation()
-        {
-            isAddingAssociation = true;
-        }
+        private Point initialItemPosition;
 
         private ItemViewModel TargetItem(MouseEventArgs e)
         {
             var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
             return (ItemViewModel)shapeVisualElement.DataContext;
+        }
+
+        private AssociationViewModel TargetAssociation(MouseEventArgs e)
+        {
+            var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
+            return (AssociationViewModel)shapeVisualElement.DataContext;
         }
 
         private static T FindParentOfType<T>(DependencyObject o)
@@ -254,62 +266,114 @@ namespace wpf_tmca.ViewModel
 
         private void MouseDownItem(MouseButtonEventArgs e)
         {
-            if (!isAddingAssociation)
+            if (!IsAddingAssociationPressed)
             {
                 var item = TargetItem(e);
                 var mousePosition = RelativeMousePosition(e);
 
                 initialMousePosition = mousePosition;
-                initialShapePosition = new Point(item.X, item.Y);
+                initialItemPosition = new Point(item.X, item.Y);
 
                 e.MouseDevice.Target.CaptureMouse();
             }
         }
 
+        private bool _itemMoving;
+
         private void MouseMoveItem(MouseEventArgs e)
         {
-            if (Mouse.Captured != null && !isAddingAssociation)
+            if (Mouse.Captured != null && !IsAddingAssociationPressed)
             {
                 var item = TargetItem(e);
                 var mousePosition = RelativeMousePosition(e);
 
-                item.X = initialShapePosition.X + (mousePosition.X - initialMousePosition.X);
-                item.Y = initialShapePosition.Y + (mousePosition.Y - initialMousePosition.Y);
+                item.X = initialItemPosition.X + (mousePosition.X - initialMousePosition.X);
+                item.Y = initialItemPosition.Y + (mousePosition.Y - initialMousePosition.Y);
+                _itemMoving = true;
+            }
+            else
+            {
+                _itemMoving = false;
             }
         }
 
         private void MouseUpItem(MouseButtonEventArgs e)
         {
-            if (isAddingAssociation)
+            var item = TargetItem(e);
+            //var association = TargetAssociation(e);
+
+            if (_selectedItem == null)
             {
-                var item = TargetItem(e);
+                _selectedItem = item;
+                _selectedItem.IsSelected = true;
+            }
+            else if (_selectedItem.ItemNumber == item.ItemNumber)
+            {
+                _selectedItem.IsSelected = false;
+                _selectedItem = null;
+            }
+            else if (!IsAddingAssociationPressed && _selectedItem.ItemNumber != item.ItemNumber)
+            {
+                _selectedItem.IsSelected = false;
+                _selectedItem = item;
+                _selectedItem.IsSelected = true;
+            }
+            /*
+            if(_selectedAssociation == null)
+            {
+                _selectedAssociation = association;
+                _selectedAssociation.IsSelected = true;
+            }*/
 
-                if (addingAssociationFrom == null) { addingAssociationFrom = item; addingAssociationFrom.IsSelected = true; }
+            if (IsAddingAssociationPressed && item.Type == EItem.Class && _selectedItem.ItemNumber != item.ItemNumber)
+            {
+                commandController.AddAndExecute(new AddAssociationCommand(Associations, new DependencyViewModel() { From = _selectedItem, To = item }));
+                _selectedItem.IsSelected = false;
 
-                else if (addingAssociationFrom.ItemNumber != item.ItemNumber)
+                IsAddingAssociationPressed = false;
+                _selectedItem = null;
+            }
+            else if (_itemMoving)
+            {
+                var mousePosition = RelativeMousePosition(e);
+
+                item.X = initialItemPosition.X;
+                item.Y = initialItemPosition.Y;
+
+                commandController.AddAndExecute(new MoveItemCommand(item, mousePosition.X - initialMousePosition.X, mousePosition.Y - initialMousePosition.Y));
+                e.MouseDevice.Target.ReleaseMouseCapture();
+
+                if (_selectedItem != null)
                 {
-                    commandController.AddAndExecute(new AddAssociationCommand(Associations, new DependencyViewModel() { From = addingAssociationFrom, To = item }));
-                    addingAssociationFrom.IsSelected = false;
-
-                    isAddingAssociation = false;
-                    addingAssociationFrom = null;
+                    _selectedItem.IsSelected = false;
                 }
             }
             else
             {
-                var item = TargetItem(e);
-                var mousePosition = RelativeMousePosition(e);
 
-                item.X = initialShapePosition.X;
-                item.Y = initialShapePosition.Y;
-
-                commandController.AddAndExecute(new MoveItemCommand(item, mousePosition.X - initialMousePosition.X, mousePosition.Y - initialMousePosition.Y));
-
-                e.MouseDevice.Target.ReleaseMouseCapture();
             }
         }
 
         #endregion
 
+        #region deleteItem
+
+        private bool canDelete() => _selectedItem != null;
+
+        private void deleteItem()
+        {
+            /*
+            foreach(AssociationViewModel association in this.Associations)
+            {
+                if (association.From == _selectedItem || association.To == _selectedItem)
+                {
+                    Associations.Remove(association);
+                }
+            }*/
+
+            Items.Remove(_selectedItem);
+        }
+
+        #endregion
     }
 }
