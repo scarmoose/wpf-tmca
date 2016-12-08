@@ -215,6 +215,7 @@ namespace wpf_tmca.ViewModel
 
         private bool _isAddingAssociation;
         private ItemViewModel _selectedItem;
+        private AssociationViewModel _selectedAssociation;
 
         private Point initialMousePosition;
 
@@ -224,6 +225,12 @@ namespace wpf_tmca.ViewModel
         {
             var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
             return (ItemViewModel)shapeVisualElement.DataContext;
+        }
+
+        private AssociationViewModel TargetAssociation(MouseEventArgs e)
+        {
+            var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
+            return (AssociationViewModel)shapeVisualElement.DataContext;
         }
 
         private static T FindParentOfType<T>(DependencyObject o)
@@ -275,6 +282,7 @@ namespace wpf_tmca.ViewModel
         private void MouseUpItem(MouseButtonEventArgs e)
         {
             var item = TargetItem(e);
+            //var association = TargetAssociation(e);
 
             if (_selectedItem == null)
             {
@@ -292,6 +300,12 @@ namespace wpf_tmca.ViewModel
                 _selectedItem = item;
                 _selectedItem.IsSelected = true;
             }
+            /*
+            if(_selectedAssociation == null)
+            {
+                _selectedAssociation = association;
+                _selectedAssociation.IsSelected = true;
+            }*/
 
             if (IsAddingAssociationPressed && item.Type == EItem.Class && _selectedItem.ItemNumber != item.ItemNumber)
             {
@@ -330,6 +344,15 @@ namespace wpf_tmca.ViewModel
 
         private void deleteItem()
         {
+            /*
+            foreach(AssociationViewModel association in this.Associations)
+            {
+                if (association.From == _selectedItem || association.To == _selectedItem)
+                {
+                    Associations.Remove(association);
+                }
+            }*/
+
             Items.Remove(_selectedItem);
         }
 
