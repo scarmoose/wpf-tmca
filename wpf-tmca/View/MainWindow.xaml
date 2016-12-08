@@ -29,6 +29,8 @@
         <KeyBinding Modifiers="Alt"
                     Key="F4"
                     Command="{Binding ExitCommand}" />
+        <KeyBinding Key="Backspace"
+                    Command="{Binding DeleteItemCommand}" />
     </Window.InputBindings>
 
     <Window.Resources>

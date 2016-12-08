@@ -38,6 +38,7 @@ namespace wpf_tmca.ViewModel
         public ICommand MouseDownItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseDownItem);
         public ICommand MouseMoveItemCommand => new RelayCommand<MouseEventArgs>(MouseMoveItem);
         public ICommand MouseUpItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseUpItem);
+        public ICommand DeleteItemCommand => new RelayCommand(deleteItem, canDelete);
 
         public ICommand SaveCommand => new RelayCommand(SaveToFile);
         public ICommand LoadCommand => new RelayCommand(LoadFromFile);
@@ -213,7 +214,7 @@ namespace wpf_tmca.ViewModel
         #region Association
 
         private bool _isAddingAssociation;
-        private ItemViewModel addingAssociationFrom;
+        private ItemViewModel _selectedItem;
 
         private Point initialMousePosition;
 
@@ -252,50 +253,86 @@ namespace wpf_tmca.ViewModel
             }
         }
 
+        private bool _itemMoving;
+
         private void MouseMoveItem(MouseEventArgs e)
         {
-            if (Mouse.Captured != null && !_isAddingAssociation)
+            if (Mouse.Captured != null && !IsAddingAssociationPressed)
             {
                 var item = TargetItem(e);
                 var mousePosition = RelativeMousePosition(e);
 
                 item.X = initialItemPosition.X + (mousePosition.X - initialMousePosition.X);
                 item.Y = initialItemPosition.Y + (mousePosition.Y - initialMousePosition.Y);
+                _itemMoving = true;
+            }
+            else
+            {
+                _itemMoving = false;
             }
         }
 
         private void MouseUpItem(MouseButtonEventArgs e)
         {
-            if (IsAddingAssociationPressed)
+            var item = TargetItem(e);
+
+            if (_selectedItem == null)
             {
-                var item = TargetItem(e);
-
-                if (addingAssociationFrom == null) { addingAssociationFrom = item; addingAssociationFrom.IsSelected = true; }
-
-                else if (addingAssociationFrom.ItemNumber != item.ItemNumber)
-                {
-                    commandController.AddAndExecute(new AddAssociationCommand(Associations, new DependencyViewModel() { From = addingAssociationFrom, To = item }));
-                    addingAssociationFrom.IsSelected = false;
-
-                    IsAddingAssociationPressed = false;
-                    addingAssociationFrom = null;
-                }
+                _selectedItem = item;
+                _selectedItem.IsSelected = true;
             }
-            else
+            else if (_selectedItem.ItemNumber == item.ItemNumber)
             {
-                var item = TargetItem(e);
+                _selectedItem.IsSelected = false;
+                _selectedItem = null;
+            }
+            else if (!IsAddingAssociationPressed && _selectedItem.ItemNumber != item.ItemNumber)
+            {
+                _selectedItem.IsSelected = false;
+                _selectedItem = item;
+                _selectedItem.IsSelected = true;
+            }
+
+            if (IsAddingAssociationPressed && item.Type == EItem.Class && _selectedItem.ItemNumber != item.ItemNumber)
+            {
+                commandController.AddAndExecute(new AddAssociationCommand(Associations, new DependencyViewModel() { From = _selectedItem, To = item }));
+                _selectedItem.IsSelected = false;
+
+                IsAddingAssociationPressed = false;
+                _selectedItem = null;
+            }
+            else if (_itemMoving)
+            {
                 var mousePosition = RelativeMousePosition(e);
 
                 item.X = initialItemPosition.X;
                 item.Y = initialItemPosition.Y;
 
                 commandController.AddAndExecute(new MoveItemCommand(item, mousePosition.X - initialMousePosition.X, mousePosition.Y - initialMousePosition.Y));
-
                 e.MouseDevice.Target.ReleaseMouseCapture();
+
+                if (_selectedItem != null)
+                {
+                    _selectedItem.IsSelected = false;
+                }
+            }
+            else
+            {
+
             }
         }
 
         #endregion
 
+        #region deleteItem
+
+        private bool canDelete() => _selectedItem != null;
+
+        private void deleteItem()
+        {
+            Items.Remove(_selectedItem);
+        }
+
+        #endregion
     }
 }
