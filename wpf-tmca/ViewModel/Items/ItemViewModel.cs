@@ -105,7 +105,7 @@ namespace wpf_tmca.ViewModel
         public EItem Type => Item.Type;
 
 
-        public double Height { get { Console.WriteLine(Item.Height); return Item.Height; } set { Item.Height = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); NotifyPropertyChanged(() => CenterY); } }
+        public double Height { get { return Item.Height; } set { Item.Height = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterY); NotifyPropertyChanged(() => CenterY); } }
         public double Width { get { return Item.Width; } set { Item.Width = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); NotifyPropertyChanged(() => CenterX); } }
        
         public double X { get { return Item.X; } set { Item.X = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => CanvasCenterX); } }

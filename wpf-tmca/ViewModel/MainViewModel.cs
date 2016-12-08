@@ -38,7 +38,6 @@ namespace wpf_tmca.ViewModel
         public ICommand MouseDownItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseDownItem);
         public ICommand MouseMoveItemCommand => new RelayCommand<MouseEventArgs>(MouseMoveItem);
         public ICommand MouseUpItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseUpItem);
-        public ICommand AddAssociationCommand => new RelayCommand(AddAssociation);
 
         public ICommand SaveCommand => new RelayCommand(SaveToFile);
         public ICommand LoadCommand => new RelayCommand(LoadFromFile);
@@ -201,19 +200,24 @@ namespace wpf_tmca.ViewModel
             }
         }
 
+        public bool IsAddingAssociationPressed
+        {
+            get { return _isAddingAssociation; }
+            set
+            {
+                _isAddingAssociation = value;
+                OnPropertyChanged();
+            }
+        }
+
         #region Association
 
-        private bool isAddingAssociation;
+        private bool _isAddingAssociation;
         private ItemViewModel addingAssociationFrom;
 
         private Point initialMousePosition;
 
-        private Point initialShapePosition;
-
-        private void AddAssociation()
-        {
-            isAddingAssociation = true;
-        }
+        private Point initialItemPosition;
 
         private ItemViewModel TargetItem(MouseEventArgs e)
         {
@@ -236,13 +240,13 @@ namespace wpf_tmca.ViewModel
 
         private void MouseDownItem(MouseButtonEventArgs e)
         {
-            if (!isAddingAssociation)
+            if (!IsAddingAssociationPressed)
             {
                 var item = TargetItem(e);
                 var mousePosition = RelativeMousePosition(e);
 
                 initialMousePosition = mousePosition;
-                initialShapePosition = new Point(item.X, item.Y);
+                initialItemPosition = new Point(item.X, item.Y);
 
                 e.MouseDevice.Target.CaptureMouse();
             }
@@ -250,19 +254,19 @@ namespace wpf_tmca.ViewModel
 
         private void MouseMoveItem(MouseEventArgs e)
         {
-            if (Mouse.Captured != null && !isAddingAssociation)
+            if (Mouse.Captured != null && !_isAddingAssociation)
             {
                 var item = TargetItem(e);
                 var mousePosition = RelativeMousePosition(e);
 
-                item.X = initialShapePosition.X + (mousePosition.X - initialMousePosition.X);
-                item.Y = initialShapePosition.Y + (mousePosition.Y - initialMousePosition.Y);
+                item.X = initialItemPosition.X + (mousePosition.X - initialMousePosition.X);
+                item.Y = initialItemPosition.Y + (mousePosition.Y - initialMousePosition.Y);
             }
         }
 
         private void MouseUpItem(MouseButtonEventArgs e)
         {
-            if (isAddingAssociation)
+            if (IsAddingAssociationPressed)
             {
                 var item = TargetItem(e);
 
@@ -273,7 +277,7 @@ namespace wpf_tmca.ViewModel
                     commandController.AddAndExecute(new AddAssociationCommand(Associations, new DependencyViewModel() { From = addingAssociationFrom, To = item }));
                     addingAssociationFrom.IsSelected = false;
 
-                    isAddingAssociation = false;
+                    IsAddingAssociationPressed = false;
                     addingAssociationFrom = null;
                 }
             }
@@ -282,8 +286,8 @@ namespace wpf_tmca.ViewModel
                 var item = TargetItem(e);
                 var mousePosition = RelativeMousePosition(e);
 
-                item.X = initialShapePosition.X;
-                item.Y = initialShapePosition.Y;
+                item.X = initialItemPosition.X;
+                item.Y = initialItemPosition.Y;
 
                 commandController.AddAndExecute(new MoveItemCommand(item, mousePosition.X - initialMousePosition.X, mousePosition.Y - initialMousePosition.Y));
 
