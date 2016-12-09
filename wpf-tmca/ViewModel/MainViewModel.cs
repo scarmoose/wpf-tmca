@@ -27,14 +27,9 @@ namespace wpf_tmca.ViewModel
         private string _statusBarVisability, _toolBoxVisability, path;
         private ItemViewModel _selectedItem;
         private Point initialMousePosition, initialItemPosition;
-        public ItemsCollection Items { get; private set; }
         public ObservableCollection<AssociationViewModel> Associations { get; private set; }
-        string path;
-        private bool _isAddingClassPressed;
-        private bool _isAddingTextBoxPressed;
         public DiagramRepresentation diagram { get; private set; }
         public ObservableCollection<ItemViewModel> Items { get; private set; }
-        public ObservableCollection<AssociationViewModel> Associations { get; private set; }
         private CommandController commandController => CommandController.Instance;
         private SaveLoadController saveLoadController => SaveLoadController.Instance;
 
@@ -47,9 +42,6 @@ namespace wpf_tmca.ViewModel
         public ICommand RedoCommand => commandController.RedoCommand;
 
         public ICommand MouseDownItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseDownItem);
-        public ICommand AddNewClassCommand => new RelayCommand(addNewClass);
-        public ICommand AddNewTextBoxCommand => new RelayCommand(addNewTextBox);
-        public ICommand AddNewDependencyCommand => new RelayCommand(addNewDependency);
         public ICommand MouseMoveItemCommand => new RelayCommand<MouseEventArgs>(MouseMoveItem);
         public ICommand MouseUpItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseUpItem);
         public ICommand DeleteItemCommand => new RelayCommand(deleteItem, canDeleteItem);
@@ -66,8 +58,11 @@ namespace wpf_tmca.ViewModel
             _statusBar = true;
             _toolBox = true;
 
-            Items = new ItemsCollection();
+            Items = new ObservableCollection<ItemViewModel>();
             Associations = new ObservableCollection<AssociationViewModel>();
+            diagram = new DiagramRepresentation();
+            diagram.items = Items;
+            diagram.associations = Associations;
         }
 
         #region Adding
@@ -102,40 +97,9 @@ namespace wpf_tmca.ViewModel
                 OnPropertyChanged();
             }
         }
-
-        public void addNewClass()
-        {
-            ItemViewModel item = new ClassViewModel() { X = 10, Y = 10 };
-            commandController.AddAndExecute(new AddItemCommand(Items, item));
-        }
-
-        public void addNewTextBox()
-        {
-            ItemViewModel item = new TextBoxViewModel() { X = 10, Y = 10 };
-            commandController.AddAndExecute(new AddItemCommand(Items, item));
-        }
-
-        public void addNewDependency()
-        {
-            IsAddingAssociationPressed = true;
-        }
         #endregion
 
         #region Save and Load
-
-        public MainViewModel() : base()
-        {
-            _statusBar = true;
-            _toolBox = true;
-
-            Items = new ObservableCollection<ItemViewModel>();
-            Associations = new ObservableCollection<AssociationViewModel>();
-            diagram = new DiagramRepresentation();
-            diagram.items = Items;
-            diagram.associations = Associations;
-        }
-
-
         //save as with chosen path
         public void SaveAsToFile()
         {
@@ -143,6 +107,7 @@ namespace wpf_tmca.ViewModel
             bool? result = fd.ShowDialog();
             if (result.HasValue && result.Value)
             {
+                path = fd.FileName;
                 Thread t = new Thread(() => saveLoadController.SaveToFile(diagram, fd.FileName));
                 t.Start();
                 //saveLoadController.SaveToFile(this.Items, fd.FileName);
@@ -151,7 +116,15 @@ namespace wpf_tmca.ViewModel
         // save with current path
         public void SaveToFile()
         {
-            Thread t = new Thread(() => saveLoadController.SaveToFile(diagram, path));
+            if (path == null)
+            {
+                SaveAsToFile();
+            }
+            else
+            {
+                Thread t = new Thread(() => saveLoadController.SaveToFile(diagram, path));
+                t.Start();
+            }
         }
         
         public void PerformLoadFromFile()
@@ -159,8 +132,14 @@ namespace wpf_tmca.ViewModel
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     diagram = saveLoadController.LoadFromFile(path);
+                    this.Items.Clear();
+                    this.Associations.Clear();
+                    this.Items = diagram.items;
+                    this.Associations = diagram.associations;
+                    OnPropertyChanged();
                     //Items = new ObservableCollection<ItemViewModel>();
                     //Associations = new ObservableCollection<AssociationViewModel>();
+                    /*
                     foreach (ItemViewModel item in diagram.items)
                     {
                         this.Items.Add(item);
@@ -168,7 +147,7 @@ namespace wpf_tmca.ViewModel
                     foreach (AssociationViewModel ass in diagram.associations)
                     {
                         this.Associations.Add(ass);
-                    }
+                    }*/
                     //Items = diagram.items;
                     //Associations = diagram.associations;
                 });   
@@ -268,8 +247,6 @@ namespace wpf_tmca.ViewModel
         }
 
         #endregion
-
-        
 
         #region MouseEvents
 

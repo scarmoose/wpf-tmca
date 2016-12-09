@@ -61,7 +61,7 @@
             <ItemsControl ItemsSource="{Binding Associations}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas />
+                        <Canvas/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <!--

@@ -24,9 +24,9 @@
             <Image Source="/Images/arrow-redo-icon.png"/>
         </Button>
         <Separator/>
-        <Button ToolTip="Bold" Command="" Height="20" Width="20">
+        <ToggleButton ToolTip="Bold" Command="" Height="20" Width="20">
             <Image Source="/Images/Editing-Bold-icon.png"/>
-        </Button>
+        </ToggleButton>
         <Button ToolTip="Italic" Command="" Height="20" Width="20">
             <Image Source="/Images/Editing-Italic-icon.png"/>
         </Button>
