@@ -9,6 +9,7 @@ namespace wpf_tmca.ViewModel
     public abstract class ItemViewModel : BaseViewModel, IItem, IEquatable<ItemViewModel>, IEqualityComparer<ItemViewModel>
     {
         private bool _isSelected;
+        private bool _isConnectingItems;
         private CommandController _CommandController => CommandController.Instance;
         
         public bool IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
@@ -18,11 +19,13 @@ namespace wpf_tmca.ViewModel
         public int ItemNo
         {
             get { return ItemNumber; }
+            /*
             set
             {
-                ItemNumber = value;
+                //ItemNumber = value;
                 NotifyPropertyChanged();
             }
+            */
         }
 
         public bool IsConnectingShapes

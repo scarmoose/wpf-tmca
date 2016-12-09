@@ -146,6 +146,7 @@ namespace wpf_tmca.ViewModel
                     {
                         this.Associations.Add(ass);
                     }
+                    */
                 });   
         }
         
