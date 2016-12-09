@@ -71,26 +71,16 @@
                         <Canvas/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                <!--
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <userControls:Class/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                -->
             </ItemsControl>
 
 
             <ec:ItemsListBox x:Name="ItemControl" ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ItemCanvasStyle}" ItemContainerStyle="{StaticResource ItemContainerStyle}">
-                
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <cmd:EventToCommand Command="{Binding CreateItemCommand}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                
-            </ec:ItemsListBox> 
-            <!-- Indsæt noget så det virker her -->
+            </ec:ItemsListBox>  
             
         </Grid>
     </DockPanel>
