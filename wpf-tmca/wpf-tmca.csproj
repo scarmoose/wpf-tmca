@@ -80,9 +80,8 @@
     <Compile Include="Commands\UndoRedoCommands\AddItemCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\AddAssociationCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\MoveItemCommand.cs" />
-    <Compile Include="Commands\UndoRedoCommands\MoveItemsCommand.cs" />
-    <Compile Include="Commands\UndoRedoCommands\RemoveItemsCommand.cs" />
-    <Compile Include="Commands\UndoRedoCommands\RemoveAssociationCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\RemoveItemCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\RemoveAssociationsCommand.cs" />
     <Compile Include="SaveAndLoad\SaveLoadController.cs" />
     <Compile Include="ViewModel\Associations\AssociationViewModel.cs" />
     <Compile Include="ViewModel\Associations\DependencyViewModel.cs" />

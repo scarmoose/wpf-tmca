@@ -36,7 +36,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/StyleDictionary.xaml"/>
-                <ResourceDictionary Source="Resources/ItemStyleDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type items:ClassViewModel}">
                 <userControls:Class/>

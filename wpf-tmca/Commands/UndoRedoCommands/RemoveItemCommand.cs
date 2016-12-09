@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using wpf_tmca.ViewModel;
@@ -6,14 +7,14 @@ using wpf_tmca.ViewModel.Associations;
 
 namespace wpf_tmca.Commands.UndoRedoCommands
 {
-    class RemoveItemsCommand : IUndoRedoCommand
+    class RemoveItemCommand : IUndoRedoCommand
     {
         private ObservableCollection<ItemViewModel> items;
         private ObservableCollection<AssociationViewModel> associations;
         private List<ItemViewModel> itemsToRemove;
         private List<AssociationViewModel> associationsToRemove;
 
-        public RemoveItemsCommand(ObservableCollection<ItemViewModel> _items, 
+        public RemoveItemCommand(ObservableCollection<ItemViewModel> _items, 
             ObservableCollection<AssociationViewModel> _associations, List<ItemViewModel> _itemsToRemove)
         {
             items = _items;

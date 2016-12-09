@@ -1,4 +1,5 @@
-﻿using wpf_tmca.ViewModel;
+﻿using System;
+using wpf_tmca.ViewModel;
 
 namespace wpf_tmca.Commands.UndoRedoCommands
 {

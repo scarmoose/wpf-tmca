@@ -22,7 +22,7 @@ namespace wpf_tmca.ViewModel
     class MainViewModel : BaseViewModel
     {
         private bool _isAddingClassPressed, _isAddingTextBoxPressed, _isAddingAssociation, _itemMoving, _statusBar, _toolBox;
-        private string _statusBarVisability, _toolBoxVisability, path;
+        private string _statusBarVisability, _toolBoxVisability, path, _msg;
         private ItemViewModel _selectedItem;
         private Point initialMousePosition, initialItemPosition;
         public ObservableCollection<AssociationViewModel> Associations { get; private set; }
@@ -243,6 +243,15 @@ namespace wpf_tmca.ViewModel
                 this.OnPropertyChanged("ToolBoxVisability");
             }
         }
+        public string StatusBarMsg
+        {
+            get { return _msg; }
+            set
+            {
+                _msg = value;
+                this.OnPropertyChanged("StatusBarMsg");
+            }
+        }
 
         #endregion
 
@@ -259,19 +268,18 @@ namespace wpf_tmca.ViewModel
             var position = e.MouseDevice.GetPosition(e.Source as IInputElement);
             if (IsAddingClassPressed)
             {
-                Console.WriteLine("Class");
                 item = new ClassViewModel() { X = position.X, Y = position.Y };
                 IsAddingClassPressed = false;
             }
             else if (IsAddingTextBoxPressed)
             {
-                Console.WriteLine("TextBox");
                 item = new TextBoxViewModel() { X = position.X, Y = position.Y };
                 IsAddingTextBoxPressed = false;
             }
             if (item != null)
             {
                 commandController.AddAndExecute(new AddItemCommand(Items, item));
+                StatusBarMsg = item.Type + " have been added on postions {" + position.X + ";" + position.Y + "}";
             }
         }
 
@@ -348,7 +356,9 @@ namespace wpf_tmca.ViewModel
 
             if (item != null && IsAddingAssociationPressed && item.Type == EItem.Class && _selectedItem.Type == EItem.Class && _selectedItem.ItemNumber != item.ItemNumber)
             {
-                commandController.AddAndExecute(new AddAssociationCommand(Associations, new DependencyViewModel() { From = _selectedItem, To = item }));
+                AssociationViewModel association = new DependencyViewModel() { From = _selectedItem, To = item };
+                commandController.AddAndExecute(new AddAssociationCommand(Associations, association));
+                StatusBarMsg = association.Type + " have been added {From: " + association.From + " To: " + association.To + "}";
                 _selectedItem.IsSelected = false;
 
                 IsAddingAssociationPressed = false;
@@ -361,7 +371,11 @@ namespace wpf_tmca.ViewModel
                 item.X = initialItemPosition.X;
                 item.Y = initialItemPosition.Y;
 
-                commandController.AddAndExecute(new MoveItemCommand(item, mousePosition.X - initialMousePosition.X, mousePosition.Y - initialMousePosition.Y));
+                double x = mousePosition.X - initialMousePosition.X;
+                double y = mousePosition.Y - initialMousePosition.Y;
+
+                commandController.AddAndExecute(new MoveItemCommand(item, x, y));
+                StatusBarMsg = item.Type + " with number " + item.ItemNumber + " have been moved to {" + mousePosition.X + ";" + mousePosition.Y + "}";
                 e.MouseDevice.Target.ReleaseMouseCapture();
 
                 if (_selectedItem != null)
@@ -380,12 +394,15 @@ namespace wpf_tmca.ViewModel
 
         private void deleteItem()
         {
-            commandController.AddAndExecute(new RemoveItemsCommand(Items, Associations, new List<ItemViewModel>() { _selectedItem }));
+            commandController.AddAndExecute(new RemoveItemCommand(Items, Associations, new List<ItemViewModel>() { _selectedItem }));
+            _selectedItem = null;
+            StatusBarMsg = _selectedItem.Type + " with number " + _selectedItem.ItemNumber + " have been deleted";
         }
 
         private void deleteAssociations(IList _associations)
         {
             commandController.AddAndExecute(new RemoveAssociationsCommand(Associations, _associations.Cast<AssociationViewModel>().ToList()));
+            StatusBarMsg = "One or more associations have been deleted";
         }
 
         #endregion
