@@ -16,28 +16,6 @@ namespace wpf_tmca.ViewModel
         
         public Brush SelectedColor => IsSelected ? Brushes.DarkRed : Brushes.Black;
 
-        public int ItemNo
-        {
-            get { return ItemNumber; }
-            /*
-            set
-            {
-                //ItemNumber = value;
-                NotifyPropertyChanged();
-            }
-            */
-        }
-
-        public bool IsConnectingShapes
-        {
-            get { return _isConnectingItems; }
-            set
-            {
-                _isConnectingItems = value;
-                OnPropertyChanged();
-            }
-        }
-
         protected IItem Item { get; }
         protected ItemViewModel(Item item)
         {
