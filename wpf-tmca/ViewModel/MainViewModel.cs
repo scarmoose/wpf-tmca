@@ -30,7 +30,7 @@ namespace wpf_tmca.ViewModel
         public ObservableCollection<ItemViewModel> Items { get; private set; }
         private CommandController commandController => CommandController.Instance;
         private SaveLoadController saveLoadController => SaveLoadController.Instance;
-
+        
         #region Commands
         public ICommand ExitCommand => commandController.ExitCommand;
         public ICommand HideStatusBarCommand => new RelayCommand(HideStatusBar);
@@ -120,7 +120,7 @@ namespace wpf_tmca.ViewModel
             }
             else
             {
-                Thread t = new Thread(() => saveLoadController.SaveToFile(diagram, path));
+            Thread t = new Thread(() => saveLoadController.SaveToFile(diagram, path));
                 t.Start();
             }
         }
@@ -145,9 +145,8 @@ namespace wpf_tmca.ViewModel
                     foreach (AssociationViewModel ass in diagram.associations)
                     {
                         this.Associations.Add(ass);
-                    }*/
-                    //Items = diagram.items;
-                    //Associations = diagram.associations;
+                    }
+                    */
                 });   
         }
         
@@ -180,9 +179,9 @@ namespace wpf_tmca.ViewModel
             }
         }
 
-        #endregion
+    #endregion
 
-        #region View
+    #region View
 
         public void HideStatusBar()
         {
@@ -384,7 +383,7 @@ namespace wpf_tmca.ViewModel
                     _selectedItem = null;
                 }
             }
-        }
+            }
 
         #endregion
 
