@@ -7,13 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <ToolBar ToolBarTray.IsLocked="True" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="0,0,0,0.3">
-        <Button ToolTip="New Project" Height="20" Width="20">
+        <Button ToolTip="New Project" Height="20" Width="20" Command="{Binding newProjectCommand}">
             <Image Source="/Images/new-file-icon.png"/>
         </Button>
-        <Button ToolTip="Open Project" Height="20" Width="20">
+        <Button ToolTip="Open Project" Height="20" Width="20" Command="{Binding LoadCommand}">
             <Image Source="/Images/open-file-icon.png"/>
         </Button>
-        <Button ToolTip="Save" Height="20" Width="20">
+        <Button ToolTip="Save" Height="20" Width="20" Command="{Binding SaveCommand}">
             <Image Source="/Images/Save-icon.png"/>
         </Button>
         <Separator/>
@@ -24,9 +24,9 @@
             <Image Source="/Images/arrow-redo-icon.png"/>
         </Button>
         <Separator/>
-        <Button ToolTip="Bold" Command="" Height="20" Width="20">
+        <ToggleButton ToolTip="Bold" Command="" Height="20" Width="20">
             <Image Source="/Images/Editing-Bold-icon.png"/>
-        </Button>
+        </ToggleButton>
         <Button ToolTip="Italic" Command="" Height="20" Width="20">
             <Image Source="/Images/Editing-Italic-icon.png"/>
         </Button>

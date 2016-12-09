@@ -12,15 +12,11 @@ namespace wpf_tmca.ViewModel.Associations
     {
         private ItemViewModel _to;
         private ItemViewModel _from;
-        private bool _isSelected;
         private readonly Association _association;
         public int fromPoint => _from.ItemNumber;
         public string Label { get; set; }
         public int toPoint => _to.ItemNumber;
         public EAssociation Type { get; set; }
-
-        public bool IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
-        public Brush SelectedColor => IsSelected ? Brushes.DarkRed : Brushes.Black;
 
         protected AssociationViewModel(Association association)
         {

@@ -10,7 +10,6 @@
             <Setter.Value>
                 <ItemsPanelTemplate>
                     <Canvas Background="Transparent">
-
                     </Canvas>
                 </ItemsPanelTemplate>
             </Setter.Value>

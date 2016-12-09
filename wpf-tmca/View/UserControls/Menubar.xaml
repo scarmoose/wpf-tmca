@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Menu>
         <MenuItem Header="_File">
-            <MenuItem Header="New Project">
+            <MenuItem Header="New Project" Command="{Binding newProjectCommand}">
                 <MenuItem.Icon>
                     <Image Source="/Images/new-file-icon.png" />
                 </MenuItem.Icon>
@@ -29,15 +29,15 @@
                 </MenuItem.Icon>
             </MenuItem>
             <Separator/>
-            <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+            <MenuItem Header="Exit" Command="{Binding ExitCommand}" InputGestureText="Alt+F4"/>
         </MenuItem>
         <MenuItem Header="_Edit">
-            <MenuItem Header="Undo" Command="{Binding UndoCommand, UpdateSourceTrigger=PropertyChanged}">
+            <MenuItem Header="Undo" Command="{Binding UndoCommand, UpdateSourceTrigger=PropertyChanged}" InputGestureText="Ctrl+Z">
                 <MenuItem.Icon>
                     <Image Source="/Images/arrow-undo-icon.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Redo" Command="{Binding RedoCommand, UpdateSourceTrigger=PropertyChanged}">
+            <MenuItem Header="Redo" Command="{Binding RedoCommand, UpdateSourceTrigger=PropertyChanged}" InputGestureText="Ctrl+Y">
                 <MenuItem.Icon>
                     <Image Source="/Images/arrow-redo-icon.png"/>
                 </MenuItem.Icon>
@@ -80,9 +80,9 @@
             </MenuItem>
         </MenuItem>
         <MenuItem Header="_Insert">
-            <MenuItem Header="New Class"/>
-            <MenuItem Header="New Dependency"/>
-            <MenuItem Header="New TextBox"/>
+            <MenuItem Header="New Class" IsCheckable="True" IsChecked="{Binding IsAddingClassPressed}"/>
+            <MenuItem Header="New TextBox" IsCheckable="True" IsChecked="{Binding IsAddingTextBoxPressed}"/>
+            <MenuItem Header="New Dependency" IsCheckable="True" IsChecked="{Binding IsAddingAssociationPressed}"/>
         </MenuItem>
         <MenuItem Header="_Help">
             <MenuItem Header="Help"/>

@@ -8,31 +8,29 @@ using wpf_tmca.Commands;
 using wpf_tmca.Commands.UndoRedoCommands;
 using System.Collections.ObjectModel;
 using wpf_tmca.ViewModel.Associations;
-using GalaSoft.MvvmLight;
 using wpf_tmca.Model;
 using System.Windows.Media;
 using System.Windows.Controls;
 using wpf_tmca.SaveAndLoad;
-using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.Threading;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace wpf_tmca.ViewModel
 {
     class MainViewModel : BaseViewModel
     {
-        string path;
-        private bool _isAddingClassPressed;
-        private bool _isAddingTextBoxPressed;
+        private bool _isAddingClassPressed, _isAddingTextBoxPressed, _isAddingAssociation, _itemMoving, _statusBar, _toolBox;
+        private string _statusBarVisability, _toolBoxVisability, path, _msg;
+        private ItemViewModel _selectedItem;
+        private Point initialMousePosition, initialItemPosition;
+        public ObservableCollection<AssociationViewModel> Associations { get; private set; }
         public DiagramRepresentation diagram { get; private set; }
         public ObservableCollection<ItemViewModel> Items { get; private set; }
-        public ObservableCollection<AssociationViewModel> Associations { get; private set; }
         private CommandController commandController => CommandController.Instance;
         private SaveLoadController saveLoadController => SaveLoadController.Instance;
         
-
-
         #region Commands
         public ICommand ExitCommand => commandController.ExitCommand;
         public ICommand HideStatusBarCommand => new RelayCommand(HideStatusBar);
@@ -40,15 +38,18 @@ namespace wpf_tmca.ViewModel
         public RelayCommand<MouseButtonEventArgs> CreateItemCommand => new RelayCommand<MouseButtonEventArgs>(OnClickCreateItem, CanCreateItem);
         public ICommand UndoCommand => commandController.UndoCommand;
         public ICommand RedoCommand => commandController.RedoCommand;
+
         public ICommand MouseDownItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseDownItem);
         public ICommand MouseMoveItemCommand => new RelayCommand<MouseEventArgs>(MouseMoveItem);
         public ICommand MouseUpItemCommand => new RelayCommand<MouseButtonEventArgs>(MouseUpItem);
-        public ICommand DeleteItemCommand => new RelayCommand(deleteItem, canDelete);
+        public ICommand DeleteItemCommand => new RelayCommand(deleteItem, canDeleteItem);
+        public ICommand DeleteAssociationsCommand => new RelayCommand<IList>(deleteAssociations);
 
         public ICommand SaveAsCommand => new RelayCommand(SaveAsToFile);
         public ICommand SaveCommand => new RelayCommand(SaveToFile);
         public ICommand LoadCommand => new RelayCommand(LoadFromFile);
-
+        public ICommand newProjectCommand => new RelayCommand(newProject);
+        #endregion
 
         public MainViewModel() : base()
         {
@@ -62,7 +63,41 @@ namespace wpf_tmca.ViewModel
             diagram.associations = Associations;
         }
 
+        #region Adding
+        public bool IsAddingClassPressed
+        {
+            get { return _isAddingClassPressed; }
+            set
+            {
+                _isAddingClassPressed = value;
+                OnPropertyChanged();
+                CreateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
 
+        public bool IsAddingTextBoxPressed
+        {
+            get { return _isAddingTextBoxPressed; }
+            set
+            {
+                _isAddingTextBoxPressed = value;
+                OnPropertyChanged();
+                CreateItemCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool IsAddingAssociationPressed
+        {
+            get { return _isAddingAssociation; }
+            set
+            {
+                _isAddingAssociation = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Save and Load
         //save as with chosen path
         public void SaveAsToFile()
         {
@@ -70,6 +105,7 @@ namespace wpf_tmca.ViewModel
             bool? result = fd.ShowDialog();
             if (result.HasValue && result.Value)
             {
+                path = fd.FileName;
                 Thread t = new Thread(() => saveLoadController.SaveToFile(diagram, fd.FileName));
                 t.Start();
                 //saveLoadController.SaveToFile(this.Items, fd.FileName);
@@ -78,7 +114,15 @@ namespace wpf_tmca.ViewModel
         // save with current path
         public void SaveToFile()
         {
+            if (path == null)
+            {
+                SaveAsToFile();
+            }
+            else
+            {
             Thread t = new Thread(() => saveLoadController.SaveToFile(diagram, path));
+                t.Start();
+            }
         }
         
         public void PerformLoadFromFile()
@@ -86,8 +130,14 @@ namespace wpf_tmca.ViewModel
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     diagram = saveLoadController.LoadFromFile(path);
-                    Items.Clear();
-                    Associations.Clear();
+                    this.Items.Clear();
+                    this.Associations.Clear();
+                    this.Items = diagram.items;
+                    this.Associations = diagram.associations;
+                    OnPropertyChanged();
+                    //Items = new ObservableCollection<ItemViewModel>();
+                    //Associations = new ObservableCollection<AssociationViewModel>();
+                    /*
                     foreach (ItemViewModel item in diagram.items)
                     {
                         this.Items.Add(item);
@@ -111,12 +161,26 @@ namespace wpf_tmca.ViewModel
             }
         }
 
+        public void newProject()
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure, you want to create a new project?" + 
+                Environment.NewLine +
+                Environment.NewLine +
+                "Remember to save your project before you create a new!", "New Project", MessageBoxButton.OKCancel);
+
+            if (result == MessageBoxResult.OK)
+            {
+                Items.Clear();
+                Associations.Clear();
+                Item._itemNumber = 0;
+                commandController.reset();
+                path = null;
+            }
+        }
+
     #endregion
 
     #region View
-
-        private bool _statusBar, _toolBox;
-        private string _statusBarVisability, _toolBoxVisability;
 
         public void HideStatusBar()
         {
@@ -177,10 +241,17 @@ namespace wpf_tmca.ViewModel
                 this.OnPropertyChanged("ToolBoxVisability");
             }
         }
+        public string StatusBarMsg
+        {
+            get { return _msg; }
+            set
+            {
+                _msg = value;
+                this.OnPropertyChanged("StatusBarMsg");
+            }
+        }
 
         #endregion
-
-        
 
         #region MouseEvents
 
@@ -195,76 +266,25 @@ namespace wpf_tmca.ViewModel
             var position = e.MouseDevice.GetPosition(e.Source as IInputElement);
             if (IsAddingClassPressed)
             {
-                Console.WriteLine("Class");
                 item = new ClassViewModel() { X = position.X, Y = position.Y };
                 IsAddingClassPressed = false;
             }
             else if (IsAddingTextBoxPressed)
             {
-                Console.WriteLine("TextBox");
                 item = new TextBoxViewModel() { X = position.X, Y = position.Y };
                 IsAddingTextBoxPressed = false;
             }
             if (item != null)
             {
                 commandController.AddAndExecute(new AddItemCommand(Items, item));
+                StatusBarMsg = item.Type + " have been added on postions {" + position.X + ";" + position.Y + "}";
             }
         }
-
-        #endregion
-
-        public bool IsAddingClassPressed
-        {
-            get { return _isAddingClassPressed; }
-            set
-            {
-                _isAddingClassPressed = value;
-                OnPropertyChanged();
-                CreateItemCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        public bool IsAddingTextBoxPressed
-        {
-            get { return _isAddingTextBoxPressed; }
-            set
-            {
-                _isAddingTextBoxPressed = value;
-                OnPropertyChanged();
-                CreateItemCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        public bool IsAddingAssociationPressed
-        {
-            get { return _isAddingAssociation; }
-            set
-            {
-                _isAddingAssociation = value;
-                OnPropertyChanged();
-            }
-        }
-
-        #region Association
-
-        private bool _isAddingAssociation;
-        private ItemViewModel _selectedItem;
-        private AssociationViewModel _selectedAssociation;
-
-        private Point initialMousePosition;
-
-        private Point initialItemPosition;
 
         private ItemViewModel TargetItem(MouseEventArgs e)
         {
             var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
             return (ItemViewModel)shapeVisualElement.DataContext;
-        }
-
-        private AssociationViewModel TargetAssociation(MouseEventArgs e)
-        {
-            var shapeVisualElement = (FrameworkElement)e.MouseDevice.Target;
-            return (AssociationViewModel)shapeVisualElement.DataContext;
         }
 
         private static T FindParentOfType<T>(DependencyObject o)
@@ -294,8 +314,6 @@ namespace wpf_tmca.ViewModel
             }
         }
 
-        private bool _itemMoving;
-
         private void MouseMoveItem(MouseEventArgs e)
         {
             if (Mouse.Captured != null && !IsAddingAssociationPressed)
@@ -316,7 +334,6 @@ namespace wpf_tmca.ViewModel
         private void MouseUpItem(MouseButtonEventArgs e)
         {
             var item = TargetItem(e);
-            //var association = TargetAssociation(e);
 
             if (_selectedItem == null)
             {
@@ -328,22 +345,18 @@ namespace wpf_tmca.ViewModel
                 _selectedItem.IsSelected = false;
                 _selectedItem = null;
             }
-            else if (!IsAddingAssociationPressed && _selectedItem.ItemNumber != item.ItemNumber)
+            else if ((!IsAddingAssociationPressed && _selectedItem.ItemNumber != item.ItemNumber) || (IsAddingAssociationPressed && _selectedItem.Type == EItem.TextBox && _selectedItem.ItemNumber != item.ItemNumber))
             {
                 _selectedItem.IsSelected = false;
                 _selectedItem = item;
                 _selectedItem.IsSelected = true;
             }
-            /*
-            if(_selectedAssociation == null)
-            {
-                _selectedAssociation = association;
-                _selectedAssociation.IsSelected = true;
-            }*/
 
-            if (IsAddingAssociationPressed && item.Type == EItem.Class && _selectedItem.ItemNumber != item.ItemNumber)
+            if (item != null && IsAddingAssociationPressed && item.Type == EItem.Class && _selectedItem.Type == EItem.Class && _selectedItem.ItemNumber != item.ItemNumber)
             {
-                commandController.AddAndExecute(new AddAssociationCommand(Associations, new DependencyViewModel() { From = _selectedItem, To = item }));
+                AssociationViewModel association = new DependencyViewModel() { From = _selectedItem, To = item };
+                commandController.AddAndExecute(new AddAssociationCommand(Associations, association));
+                StatusBarMsg = association.Type + " have been added {From: " + association.From + " To: " + association.To + "}";
                 _selectedItem.IsSelected = false;
 
                 IsAddingAssociationPressed = false;
@@ -356,29 +369,38 @@ namespace wpf_tmca.ViewModel
                 item.X = initialItemPosition.X;
                 item.Y = initialItemPosition.Y;
 
-                commandController.AddAndExecute(new MoveItemCommand(item, mousePosition.X - initialMousePosition.X, mousePosition.Y - initialMousePosition.Y));
+                double x = mousePosition.X - initialMousePosition.X;
+                double y = mousePosition.Y - initialMousePosition.Y;
+
+                commandController.AddAndExecute(new MoveItemCommand(item, x, y));
+                StatusBarMsg = item.Type + " with number " + item.ItemNumber + " have been moved to {" + mousePosition.X + ";" + mousePosition.Y + "}";
                 e.MouseDevice.Target.ReleaseMouseCapture();
 
                 if (_selectedItem != null)
                 {
                     _selectedItem.IsSelected = false;
+                    _selectedItem = null;
                 }
             }
-            else
-            {
-
             }
-        }
 
         #endregion
 
-        #region deleteItem
+        #region delete
 
-        private bool canDelete() => _selectedItem != null;
+        private bool canDeleteItem() => _selectedItem != null;
 
         private void deleteItem()
         {
-            commandController.AddAndExecute(new RemoveItemsCommand(Items, Associations, new List<ItemViewModel>() { _selectedItem }));
+            commandController.AddAndExecute(new RemoveItemCommand(Items, Associations, new List<ItemViewModel>() { _selectedItem }));
+            _selectedItem = null;
+            StatusBarMsg = _selectedItem.Type + " with number " + _selectedItem.ItemNumber + " have been deleted";
+        }
+
+        private void deleteAssociations(IList _associations)
+        {
+            commandController.AddAndExecute(new RemoveAssociationsCommand(Associations, _associations.Cast<AssociationViewModel>().ToList()));
+            StatusBarMsg = "One or more associations have been deleted";
         }
 
         #endregion

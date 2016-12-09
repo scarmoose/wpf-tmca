@@ -7,18 +7,10 @@
              mc:Ignorable="d"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
-             Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" Width="{Binding Width}" Height="{Binding Height}"
+             Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <TextBox Name="textbox" 
-         HorizontalAlignment="Stretch"
-		 MinHeight="23"
-		 Margin="5,5,5,5"
-		 TextWrapping="Wrap"
-		 Text=""
-		 VerticalAlignment="Top"
-		 MinWidth="40"
-         MaxWidth="180">
+        <Rectangle Fill="{Binding SelectedColor}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDown">
                     <cmd:EventToCommand Command="{Binding DataContext.MouseDownItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
@@ -30,7 +22,16 @@
                     <cmd:EventToCommand Command="{Binding DataContext.MouseUpItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </TextBox>
+        </Rectangle>
+        <TextBox Name="textbox" 
+         HorizontalAlignment="Stretch"
+		 MinHeight="23"
+		 Margin="8"
+		 TextWrapping="Wrap"
+		 Text=""
+		 VerticalAlignment="Top"
+		 MinWidth="28"
+         MaxWidth="180"/>
     </Grid>
 
 </UserControl>

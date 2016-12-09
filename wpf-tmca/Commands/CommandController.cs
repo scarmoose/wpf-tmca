@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 
 namespace wpf_tmca.Commands
 {
@@ -19,13 +16,14 @@ namespace wpf_tmca.Commands
         {  
             this.UndoCommand = new RelayCommand(Undo, CanUndo); 
             this.RedoCommand = new RelayCommand(Redo, CanRedo);
+            this.ExitCommand = new RelayCommand(ExitProgram);
         }
 
         public static CommandController Instance => _self;
 
         public RelayCommand UndoCommand { get; private set; } 
         public RelayCommand RedoCommand { get; private set; } 
-        public RelayCommand ExitCommand => new RelayCommand(ExitProgram);
+        public RelayCommand ExitCommand { get; private set; }
 
         public void ExitProgram()
         {
@@ -71,6 +69,13 @@ namespace wpf_tmca.Commands
         {
             UndoCommand.RaiseCanExecuteChanged();
             RedoCommand.RaiseCanExecuteChanged();
+        }
+
+        public void reset()
+        {
+            _redoStack.Clear();
+            _undoStack.Clear();
+            UpdateCommandStatus();
         }
 
     }
