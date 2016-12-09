@@ -16,12 +16,21 @@ namespace wpf_tmca.ViewModel
         private Point _initialMousePostion;
         private bool _isMoving;
         private bool _isConnectingItems;
-        private Point _initialItemPostion;
-        private CommandController _CommandController => CommandController.Instance;
+        public Point _initialItemPostion { get; set; }
         
         public bool IsSelected { get { return _isSelected; } set { _isSelected = value; NotifyPropertyChanged(); NotifyPropertyChanged(() => SelectedColor); } }
         
         public Brush SelectedColor => IsSelected ? Brushes.DarkRed : Brushes.Black;
+
+        public int ItemNo
+        {
+            get { return ItemNumber; }
+            set
+            {
+                ItemNumber = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public bool IsConnectingShapes
         {

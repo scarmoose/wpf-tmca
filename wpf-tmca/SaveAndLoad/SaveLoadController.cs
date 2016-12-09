@@ -20,12 +20,20 @@ namespace wpf_tmca.SaveAndLoad
 
         private SaveLoadController() { }
 
+        Type[] types = new Type[]
+        {
+            typeof(Item),
+            typeof(Association),
+            typeof(ClassViewModel),
+            typeof(AssociationViewModel),
+            typeof(DependencyViewModel)
+        };
+
         public void SaveToFile(DiagramRepresentation d, string path)
         {
             using (FileStream fs = File.Create(path))
             {
-                XmlSerializer s = new XmlSerializer(typeof(DiagramRepresentation), new Type[] { typeof(Item), typeof(Association),
-                    typeof(ClassViewModel), typeof(AssociationViewModel), typeof(DependencyViewModel) });
+                XmlSerializer s = new XmlSerializer(typeof(DiagramRepresentation), types);
                 s.Serialize(fs, d);
             }
         }
@@ -34,8 +42,7 @@ namespace wpf_tmca.SaveAndLoad
         {
             using (FileStream fs = File.OpenRead(path))
             {
-                XmlSerializer s = new XmlSerializer(typeof(DiagramRepresentation), new Type[] { typeof(Item), typeof(Association),
-                    typeof(ClassViewModel), typeof(AssociationViewModel), typeof(DependencyViewModel) });
+                XmlSerializer s = new XmlSerializer(typeof(DiagramRepresentation), types);
                 DiagramRepresentation d = s.Deserialize(fs) as DiagramRepresentation;
                 return d;
             }

@@ -13,7 +13,6 @@ namespace wpf_tmca.ViewModel.Associations
         public DependencyViewModel(Association line) : base(line)
         {
         }
-
         public DependencyViewModel(ItemViewModel from, ItemViewModel to) : base(new Association() {Type=EAssociation.Dependency}, from, to)
         {
         }

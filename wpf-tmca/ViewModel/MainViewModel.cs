@@ -86,8 +86,8 @@ namespace wpf_tmca.ViewModel
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     diagram = saveLoadController.LoadFromFile(path);
-                    //Items = new ObservableCollection<ItemViewModel>();
-                    //Associations = new ObservableCollection<AssociationViewModel>();
+                    Items.Clear();
+                    Associations.Clear();
                     foreach (ItemViewModel item in diagram.items)
                     {
                         this.Items.Add(item);
@@ -96,8 +96,6 @@ namespace wpf_tmca.ViewModel
                     {
                         this.Associations.Add(ass);
                     }
-                    //Items = diagram.items;
-                    //Associations = diagram.associations;
                 });   
         }
         
