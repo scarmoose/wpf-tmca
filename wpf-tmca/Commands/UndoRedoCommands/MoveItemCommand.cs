@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using wpf_tmca.ViewModel;
+﻿using wpf_tmca.ViewModel;
 
 namespace wpf_tmca.Commands.UndoRedoCommands
 {

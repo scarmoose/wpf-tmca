@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using wpf_tmca.Model;
+﻿using wpf_tmca.Model;
 
 namespace wpf_tmca.ViewModel.Associations
 {

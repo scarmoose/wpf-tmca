@@ -1,11 +1,7 @@
-﻿using GalaSoft.MvvmLight.Command;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using wpf_tmca.Commands;
-using wpf_tmca.Commands.UndoRedoCommands;
 using wpf_tmca.Model;
 
 namespace wpf_tmca.ViewModel

@@ -91,10 +91,6 @@
     <Compile Include="ViewModel\Items\ClassViewModel.cs" />
     <Compile Include="ViewModel\Items\ItemViewModel.cs" />
     <Compile Include="ViewModel\Items\TextBoxViewModel.cs" />
-    <Compile Include="View\Adorners\UserControlAdorner.cs" />
-    <Compile Include="View\Behaviors\BasicCommandBehaviors.cs" />
-    <Compile Include="View\Behaviors\ClickableOverlayBehavior.cs" />
-    <Compile Include="View\Behaviors\PositionTransfer.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\Components\ItemContainer.xaml.cs">
       <DependentUpon>ItemContainer.xaml</DependentUpon>
@@ -143,10 +139,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\Resources\ItemStyleDictionary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Resources\StyleDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
