@@ -8,17 +8,17 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Menu>
         <MenuItem Header="_File">
-            <MenuItem Header="New Project" Command="{Binding newProjectCommand}">
+            <MenuItem Header="New Project" Command="{Binding newProjectCommand}" InputGestureText="Ctrl+N">
                 <MenuItem.Icon>
                     <Image Source="/Images/new-file-icon.png" />
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Open Project" Command="{Binding LoadCommand}">
+            <MenuItem Header="Open Project" Command="{Binding LoadCommand}" InputGestureText="Ctrl+O">
                 <MenuItem.Icon>
                     <Image Source="/Images/open-file-icon.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="Save" Command="{Binding SaveCommand}">
+            <MenuItem Header="Save" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S">
                 <MenuItem.Icon>
                     <Image Source="/Images/Save-icon.png"/>
                 </MenuItem.Icon>

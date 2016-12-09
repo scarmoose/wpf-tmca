@@ -28,6 +28,15 @@
         <KeyBinding Modifiers="Alt"
                     Key="F4"
                     Command="{Binding ExitCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="N"
+                    Command="{Binding newProjectCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="O"
+                    Command="{Binding LoadCommand}" />
+        <KeyBinding Modifiers="Ctrl"
+                    Key="S"
+                    Command="{Binding SaveCommand}" />
         <KeyBinding Key="Backspace"
                     Command="{Binding DeleteItemCommand}" />
     </Window.InputBindings>
