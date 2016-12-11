@@ -49,6 +49,9 @@ namespace wpf_tmca.ViewModel
         public ICommand SaveCommand => new RelayCommand(SaveToFile);
         public ICommand LoadCommand => new RelayCommand(LoadFromFile);
         public ICommand newProjectCommand => new RelayCommand(newProject);
+
+        public ICommand HelpCommand => new RelayCommand(help);
+        public ICommand AboutCommand => new RelayCommand(about);
         #endregion
 
         public MainViewModel() : base()
@@ -181,7 +184,7 @@ namespace wpf_tmca.ViewModel
 
     #endregion
 
-    #region View
+        #region View
 
         public void HideStatusBar()
         {
@@ -387,7 +390,7 @@ namespace wpf_tmca.ViewModel
 
         #endregion
 
-        #region delete
+        #region Delete
 
         private bool canDeleteItem() => _selectedItem != null;
 
@@ -402,6 +405,23 @@ namespace wpf_tmca.ViewModel
         {
             commandController.AddAndExecute(new RemoveAssociationsCommand(Associations, _associations.Cast<AssociationViewModel>().ToList()));
             StatusBarMsg = "One or more associations have been deleted";
+        }
+
+        #endregion
+
+        #region HelpAbout
+
+        private void help()
+        {
+            MessageBox.Show("Here is help!", "Help", MessageBoxButton.OK);
+        }
+
+        private void about()
+        {
+            MessageBox.Show("s123503 Thomas Liljegreen" +
+                Environment.NewLine + "s145094 Martin Roos" +
+                Environment.NewLine + "s145089 Christoffer John Svendsen" + 
+                Environment.NewLine + "s140995 Anders Thostrup Thomsen", "About", MessageBoxButton.OK);
         }
 
         #endregion

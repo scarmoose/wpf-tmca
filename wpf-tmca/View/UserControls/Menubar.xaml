@@ -85,9 +85,9 @@
             <MenuItem Header="New Dependency" IsCheckable="True" IsChecked="{Binding IsAddingAssociationPressed}"/>
         </MenuItem>
         <MenuItem Header="_Help">
-            <MenuItem Header="Help"/>
+            <MenuItem Header="Help" Command="{Binding HelpCommand}"/>
             <Separator/>
-            <MenuItem Header="About"/>
+            <MenuItem Header="About" Command="{Binding AboutCommand}"/>
         </MenuItem>
     </Menu>
 </UserControl>
